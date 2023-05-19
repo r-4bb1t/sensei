@@ -14,7 +14,7 @@ export default function Student({ id = 1 }: { id?: number }) {
 
   return (
     <div className="w-full flex flex-col items-center pb-4">
-      <div className="grid grid-cols-3 font-bold">
+      <div className="grid grid-cols-[32px_200px_32px] font-bold">
         <button onClick={() => setRId((rId) => ((rId + 7) % 9) + 1)}>
           {"<"}
         </button>

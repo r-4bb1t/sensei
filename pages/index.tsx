@@ -150,7 +150,12 @@ const Home: NextPage = () => {
         ref={drop}
       >
         <div className="flex absolute inset-0 w-full h-full items-center justify-center pointer-events-none">
-          <img src="/assets/background.png" className="h-[50%] mb-20" />
+          <div className="w-full h-[50%] flex items-center justify-center">
+            <img
+              src="/assets/background.png"
+              className="h-full object-contain mb-20"
+            />
+          </div>
         </div>
         <AnimatePresence>
           {windows.map((window) => (
