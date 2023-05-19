@@ -147,7 +147,7 @@ const Home: NextPage = () => {
     <div className="bg-[#ff8e96] flex h-screen flex-col overflow-hidden">
       <Header />
       <main
-        className="flex h-full w-full flex-col py-16 px-8 overflow-hidden gap-2 pointer-events-none"
+        className="flex h-full w-full flex-col py-16 px-8 overflow-hidden gap-2"
         ref={drop}
       >
         {/* <div className="flex absolute inset-0 w-full h-full items-center justify-center">
