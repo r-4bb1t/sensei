@@ -150,9 +150,9 @@ const Home: NextPage = () => {
         className="flex h-full w-full flex-col py-16 px-8 overflow-hidden gap-2"
         ref={drop}
       >
-        {/* <div className="flex absolute inset-0 w-full h-full items-center justify-center">
+        <div className="flex absolute inset-0 w-full h-full items-center justify-center pointer-events-none">
           <img src="/assets/background.png" className="h-[50%] mb-20" />
-        </div> */}
+        </div>
         <AnimatePresence>
           {windows.map((window) => (
             <Window w={window} setWindows={setWindows} key={window.id} />
