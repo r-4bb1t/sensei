@@ -13,9 +13,20 @@ module.exports = {
             "animation-timing-function": "cubic-bezier(0, 0, 0.2, 1)",
           },
         },
+        "study-big": {
+          "0%, 100%": {
+            transform: "scaleY(0.96)",
+            "animation-timing-function": "cubic-bezier(0.8, 0, 1, 1)",
+          },
+          "50%": {
+            transform: "translateY(0)",
+            "animation-timing-function": "cubic-bezier(0, 0, 0.2, 1)",
+          },
+        },
       },
       animation: {
-        study: "study 1s infinite",
+        study: "study 0.2s infinite",
+        "study-big": "study-big 1s infinite",
       },
       colors: {
         primary: "#1672C7",

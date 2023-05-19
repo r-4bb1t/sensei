@@ -14,7 +14,7 @@ export default function StudentList({
     <>
       <div className="window-pane pointer-events-none h-full break-all">
         <table className="w-full">
-          <thead className="border-b-2 border-b-black">
+          <thead className="border-b-2 border-b-black font-bold">
             <tr>
               <td className="w-16 text-center">번호</td>
               <td className="whitespace-nowrap">이름</td>

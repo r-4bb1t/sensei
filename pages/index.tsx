@@ -13,6 +13,9 @@ import { WindowProps, WindowType } from "@/constants/window";
 import StudentsList from "@/components/StudentList";
 import CCTV from "@/components/CCTV";
 import Student from "@/components/Student";
+import { useStudentsContext } from "@/contexts/studentsContext";
+import Header from "@/components/Header";
+import Homework from "@/components/Homework";
 
 const Window = ({
   w,
@@ -45,8 +48,9 @@ const Window = ({
       }
       className={cc([
         "window absolute",
-        w.type === WindowType.studentlist && "h-96 w-120",
+        w.type === WindowType.studentlist && "h-96 w-32",
         w.type === WindowType.cctv && "w-[540px] h-[528px]",
+        w.type === WindowType.homework && "w-64",
         isDragging && "hidden",
       ])}
       style={{ top: w.top + "px", left: w.left + "px" }}
@@ -71,6 +75,7 @@ const Window = ({
                 [WindowType.student]: "학생 정보",
                 [WindowType.studentlist]: "출석부",
                 [WindowType.cctv]: "교실",
+                [WindowType.homework]: "숙제",
               }[w.type]
             }
           </h1>
@@ -82,13 +87,14 @@ const Window = ({
         )}
         {w.type === WindowType.cctv && <CCTV />}
         {w.type === WindowType.student && <Student id={w.data?.id} />}
+        {w.type === WindowType.homework && <Homework />}
       </div>
     </motion.div>
   );
 };
 
 const Home: NextPage = () => {
-  const [windows, setWindows] = useState<WindowProps[]>([]);
+  const { windows, setWindows } = useStudentsContext();
   const [layer, setLayer] = useState([0, 0]);
 
   const moveWindow = useCallback(
@@ -136,8 +142,9 @@ const Home: NextPage = () => {
 
   return (
     <div className="main-background flex h-screen flex-col overflow-hidden">
+      <Header />
       <main
-        className="flex h-full w-full flex-col p-16 overflow-hidden gap-2"
+        className="flex h-full w-full flex-col py-16 px-8 overflow-hidden gap-2"
         ref={drop}
       >
         <AnimatePresence>
@@ -156,8 +163,8 @@ const Home: NextPage = () => {
                 ...windows,
                 {
                   type: WindowType.studentlist,
-                  top: e.clientY,
-                  left: e.clientX + 20,
+                  top: e.clientY + Math.random() * 50,
+                  left: e.clientX + +Math.random() * 50,
                   id: new Date().toString() + Math.random().toString(),
                 },
               ]);
@@ -189,6 +196,30 @@ const Home: NextPage = () => {
         >
           <img src="/assets/icons/cctv.png" className="w-12 h-12" />
           <div className="text-white px-1 mt-2">교실</div>
+        </button>
+        <button
+          className="hover:bg-[rgba(0,0,0,0.2)] w-16 h-20 flex flex-col items-center"
+          onClick={(e) => {
+            if (
+              windows.filter((w) => w.type === WindowType.homework).length == 0
+            )
+              setWindows([
+                ...windows,
+                {
+                  type: WindowType.homework,
+                  top: e.clientY,
+                  left: e.clientX + 20,
+                  id: new Date().toString() + Math.random().toString(),
+                },
+              ]);
+            else
+              setWindows((w) =>
+                w.filter((ww) => ww.type !== WindowType.homework)
+              );
+          }}
+        >
+          <img src="/assets/icons/homework.png" className="w-12 h-12" />
+          <div className="text-white px-1 mt-2">숙제</div>
         </button>
       </main>
       <div

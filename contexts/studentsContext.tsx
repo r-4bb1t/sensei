@@ -1,4 +1,5 @@
 import { Student } from "@/constants/types";
+import { WindowProps } from "@/constants/window";
 import {
   Dispatch,
   ReactNode,
@@ -11,14 +12,24 @@ import {
 interface StudentsContextProps {
   students: Student[];
   setStudents: Dispatch<SetStateAction<Student[]>>;
+  windows: WindowProps[];
+  setWindows: Dispatch<SetStateAction<WindowProps[]>>;
+  month: number;
+  setMonth: Dispatch<SetStateAction<number>>;
 }
 
 const StudentsContext = createContext<StudentsContextProps>({
   students: [],
   setStudents: () => {},
+  windows: [],
+  setWindows: () => {},
+  month: 3,
+  setMonth: () => {},
 });
 
 const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
+  const [month, setMonth] = useState(3);
+  const [windows, setWindows] = useState<WindowProps[]>([]);
   const [students, setStudents] = useState<Student[]>([
     {
       index: 1,
@@ -28,6 +39,8 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
       attitude: 8,
       hp: 10,
       morale: 3,
+      buffs: [],
+      lastHomework: 0,
     },
     {
       index: 2,
@@ -37,6 +50,8 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
       attitude: 1,
       hp: 10,
       morale: 10,
+      buffs: [],
+      lastHomework: 0,
     },
     {
       index: 3,
@@ -46,6 +61,8 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
       attitude: 5,
       hp: 10,
       morale: 3,
+      buffs: [],
+      lastHomework: 0,
     },
     {
       index: 4,
@@ -55,6 +72,8 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
       attitude: 1,
       hp: 10,
       morale: 10,
+      buffs: [],
+      lastHomework: 0,
     },
     {
       index: 5,
@@ -64,6 +83,8 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
       attitude: 9,
       hp: 10,
       morale: 8,
+      buffs: [],
+      lastHomework: 0,
     },
     {
       index: 6,
@@ -73,6 +94,8 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
       attitude: 6,
       hp: 10,
       morale: 7,
+      buffs: [],
+      lastHomework: 0,
     },
     {
       index: 7,
@@ -82,6 +105,8 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
       attitude: 3,
       hp: 10,
       morale: 4,
+      buffs: [],
+      lastHomework: 0,
     },
     {
       index: 8,
@@ -91,6 +116,8 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
       attitude: 5,
       hp: 10,
       morale: 7,
+      buffs: [],
+      lastHomework: 0,
     },
     {
       index: 9,
@@ -100,10 +127,14 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
       attitude: 1,
       hp: 10,
       morale: 10,
+      buffs: [],
+      lastHomework: 0,
     },
   ]);
   return (
-    <StudentsContext.Provider value={{ students, setStudents }}>
+    <StudentsContext.Provider
+      value={{ students, setStudents, windows, setWindows, month, setMonth }}
+    >
       {children}
     </StudentsContext.Provider>
   );

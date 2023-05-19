@@ -1,4 +1,8 @@
+import { useStudentsContext } from "@/contexts/studentsContext";
+import StudentItem from "./StudentItem";
+
 export default function Studying({ size }: { size: number }) {
+  const { students } = useStudentsContext();
   return (
     <div className="absolute top-0 left-0 w-full animate-study origin-bottom gap-0 grid grid-cols-8">
       {[...Array(size * 2 + 2)].map((_, i) => (
@@ -13,54 +17,25 @@ export default function Studying({ size }: { size: number }) {
       ))}
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full" />
-      <img
-        src="/assets/students/7.png"
-        className="w-full animate-study origin-bottom"
-      />
-      <img
-        src="/assets/students/4.png"
-        className="w-full animate-study origin-bottom"
-      />
-      <img
-        src="/assets/students/1.png"
-        className="w-full animate-study origin-bottom"
-      />
+      <StudentItem id={7} />
+      <StudentItem id={4} />
+      <StudentItem id={1} />
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full" />
-
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full" />
-      <img
-        src="/assets/students/8.png"
-        className="w-full animate-study origin-bottom"
-      />
-      <img
-        src="/assets/students/5.png"
-        className="w-full animate-study origin-bottom"
-      />
-      <img
-        src="/assets/students/2.png"
-        className="w-full animate-study origin-bottom"
-      />
+      <StudentItem id={8} />
+      <StudentItem id={5} />
+      <StudentItem id={2} />
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full" />
-
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full" />
-      <img
-        src="/assets/students/9.png"
-        className="w-full animate-study origin-bottom"
-      />
-      <img
-        src="/assets/students/6.png"
-        className="w-full animate-study origin-bottom"
-      />
-      <img
-        src="/assets/students/3.png"
-        className="w-full animate-study origin-bottom"
-      />
+      <StudentItem id={9} />
+      <StudentItem id={6} />
+      <StudentItem id={3} />
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full" />

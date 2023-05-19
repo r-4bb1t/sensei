@@ -8,6 +8,9 @@ export interface Student {
 
   hp: number;
   morale: number;
+
+  buffs: Buff[];
+  lastHomework: number;
 }
 
 export interface Buff {
@@ -71,3 +74,54 @@ export const BuffList = {
     ],
   }, // GPA 수치에 비례한 확률로 발생
 };
+
+export const monthDescription = [
+  "드디어 개학!",
+  "중간고사 준비 +_+",
+  "얘들아, 열심히 하자~!",
+  "벌써 기말고사ㅠㅠ",
+  "조금만 참으면 방학이다!",
+  "얘들아, 보고싶어!",
+  "9월 모의고사 화이팅!",
+  "또 중간고사라니...",
+  "곧 결전의 날!",
+  "졸업의 달",
+];
+
+export const homework = [
+  {
+    index: 0,
+    name: "선생님의 족집게 특별과제",
+    description:
+      "내신의 모든 것을 알려준다! 시험기간에 과제를 해결한다면 내신쯤이야 식은 죽 먹기!",
+    stat: { gpa: 1, hp: -1 },
+  },
+  {
+    index: 1,
+    name: "담임선생님의 훈화말씀",
+    description:
+      "다 너희들을 위해서 하는 말이야! 사람은 인성이 되어있어야 된단다!",
+    stat: { attitude: 1, morale: -1 },
+  },
+  {
+    index: 2,
+    name: "학생들을 위한 수능특강 해설",
+    description:
+      "모의고사를 잘본 친구들은 더 잘 알아듣겠지? 수능이 얼마 안남았다면 더 열심히 해라!",
+    stat: { sat: +1, hp: -1 },
+  },
+  {
+    index: 3,
+    name: "단합을 위한 수학여행",
+    description:
+      "반 친구들끼리 단합이 되어야지,, 방학 때 머리 좀 식히러 여행갈까?",
+    stat: { morale: 2, attitude: 2, gpa: -1 },
+  },
+  {
+    index: 4,
+    name: "학생들을 위한 맛있는 간식파티",
+    description:
+      "고생한 너희들을 위해 선생님이 쏜다! 수능까지 조금만 더 힘내렴!",
+    stat: { hp: 2, morale: 1 },
+  },
+];

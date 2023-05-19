@@ -12,7 +12,7 @@ export default function Student({ id = 1 }: { id?: number }) {
         <img src="/assets/items/desk1.png" className="w-24 absolute" />
         <img
           src={`/assets/students/${id}.png`}
-          className="w-24 absolute animate-study origin-bottom"
+          className="w-24 absolute animate-study-big origin-bottom"
         />
       </div>
 
