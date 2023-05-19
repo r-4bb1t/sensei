@@ -7,19 +7,19 @@
 @tailwind utilities;
 
 @layer components {
-  .table-mypage td,
-  .table-mypage th {
-    @apply py-3 px-2;
+  .grade-table td,
+  .grade-table th {
+    @apply border-2 border-black py-1;
   }
 }
 
-/* @font-face {
-  font-family: "DungGeunMo";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff")
+@font-face {
+  font-family: "DOSMyungjo";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/DOSMyungjo.woff")
     format("woff");
   font-weight: normal;
   font-style: normal;
-} */
+}
 
 * {
   box-sizing: border-box;
@@ -28,6 +28,10 @@
     "Noto Sans KR", "Malgun Gothic", sans-serif !important;
   /*   font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
     "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif; */
+}
+
+.grade-text {
+  font-family: "DOSMyungjo" !important;
 }
 
 html {

@@ -3,6 +3,7 @@ export enum WindowType {
   "student",
   "cctv",
   "homework",
+  "ending",
 }
 
 export interface WindowProps {

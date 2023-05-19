@@ -6,12 +6,26 @@ import { homework } from "@/constants/types";
 
 export default function Homework() {
   const [selected, setSelected] = useState(1);
-  const { students, setStudents, setMonth } = useStudentsContext();
+  const { students, setStudents, month, setMonth } = useStudentsContext();
   const [selectedHw, setSelectedHw] = useState(students[0].lastHomework);
   const [homeworks, setHomeworks] = useState(
     students.map((student) => homework[student.lastHomework])
   );
   const selectRef = useRef<HTMLSelectElement>(null);
+
+  const getAll = (key: "gpa" | "sat" | "attitude" | "morale" | "hp") => {
+    return (
+      (homework[selectedHw].stat[key] ?? 0) *
+        (homework[selectedHw].month[month]
+          ? homework[selectedHw].month[month][key] ?? 1
+          : 1) +
+      students[selected - 1].buffs.reduce((r, buff) => {
+        return (
+          r + (buff.duration + buff.month > month ? buff.effect[key] ?? 0 : 0)
+        );
+      }, 0)
+    );
+  };
 
   useEffect(() => {
     setSelectedHw(homeworks[selected - 1].index);
@@ -73,17 +87,13 @@ export default function Homework() {
           <div
             className={cc([
               "text-right",
-              homework[selectedHw].stat.gpa &&
-                homework[selectedHw].stat.gpa! > 0 &&
-                "text-green-600 font-bold",
-              homework[selectedHw].stat.gpa &&
-                homework[selectedHw].stat.gpa! < 0 &&
-                "text-red-600 font-bold",
+              getAll("gpa") > 0 && "text-green-600 font-bold",
+              getAll("gpa") < 0 && "text-red-600 font-bold",
             ])}
           >
             내신
           </div>
-          <div className="w-full border-2 border-black h-4 flex relative">
+          <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
             <div
               className="h-full bg-yellow-400"
               style={{ width: `${students[selected - 1].gpa * 10}%` }}
@@ -91,12 +101,10 @@ export default function Homework() {
             <div
               className={cc([
                 "h-full bg-yellow-400 opacity-50",
-                homework[selectedHw].stat.gpa &&
-                  homework[selectedHw].stat.gpa! < 0 &&
-                  "!bg-red-700 -translate-x-full absolute",
+                getAll("gpa") < 0 && "!bg-red-700 -translate-x-full absolute",
               ])}
               style={{
-                width: `${Math.abs(homework[selectedHw].stat.gpa ?? 0) * 10}%`,
+                width: `${Math.abs(getAll("gpa") ?? 0) * 10}%`,
                 left: `${students[selected - 1].gpa * 10}%`,
               }}
             ></div>
@@ -104,17 +112,13 @@ export default function Homework() {
           <div
             className={cc([
               "text-right",
-              homework[selectedHw].stat.sat &&
-                homework[selectedHw].stat.sat! > 0 &&
-                "text-green-600 font-bold",
-              homework[selectedHw].stat.sat &&
-                homework[selectedHw].stat.sat! < 0 &&
-                "text-red-600 font-bold",
+              getAll("sat") > 0 && "text-green-600 font-bold",
+              getAll("sat") < 0 && "text-red-600 font-bold",
             ])}
           >
             모고
           </div>
-          <div className="w-full border-2 border-black h-4 flex relative">
+          <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
             <div
               className="h-full bg-green-400"
               style={{ width: `${students[selected - 1].sat * 10}%` }}
@@ -122,12 +126,10 @@ export default function Homework() {
             <div
               className={cc([
                 "h-full bg-green-400 opacity-50",
-                homework[selectedHw].stat.sat &&
-                  homework[selectedHw].stat.sat! < 0 &&
-                  "!bg-red-700 -translate-x-full absolute",
+                getAll("sat") && "!bg-red-700 -translate-x-full absolute",
               ])}
               style={{
-                width: `${Math.abs(homework[selectedHw].stat.sat ?? 0) * 10}%`,
+                width: `${Math.abs(getAll("sat")) * 10}%`,
                 left: `${students[selected - 1].sat * 10}%`,
               }}
             ></div>
@@ -135,17 +137,13 @@ export default function Homework() {
           <div
             className={cc([
               "text-right",
-              homework[selectedHw].stat.attitude &&
-                homework[selectedHw].stat.attitude! > 0 &&
-                "text-green-600 font-bold",
-              homework[selectedHw].stat.attitude &&
-                homework[selectedHw].stat.attitude! < 0 &&
-                "text-red-600 font-bold",
+              getAll("attitude") > 0 && "text-green-600 font-bold",
+              getAll("attitude") < 0 && "text-red-600 font-bold",
             ])}
           >
             태도
           </div>
-          <div className="w-full border-2 border-black h-4 flex relative">
+          <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
             <div
               className="h-full bg-blue-400"
               style={{ width: `${students[selected - 1].attitude * 10}%` }}
@@ -153,14 +151,11 @@ export default function Homework() {
             <div
               className={cc([
                 "h-full bg-blue-400 opacity-50",
-                homework[selectedHw].stat.attitude &&
-                  homework[selectedHw].stat.attitude! < 0 &&
+                getAll("attitude") < 0 &&
                   "!bg-red-700 -translate-x-full absolute",
               ])}
               style={{
-                width: `${
-                  Math.abs(homework[selectedHw].stat.attitude ?? 0) * 10
-                }%`,
+                width: `${Math.abs(getAll("attitude") * 10)}%`,
                 left: `${students[selected - 1].attitude * 10}%`,
               }}
             ></div>
@@ -169,17 +164,13 @@ export default function Homework() {
           <div
             className={cc([
               "text-right",
-              homework[selectedHw].stat.morale &&
-                homework[selectedHw].stat.morale! > 0 &&
-                "text-green-600 font-bold",
-              homework[selectedHw].stat.morale &&
-                homework[selectedHw].stat.morale! < 0 &&
-                "text-red-600 font-bold",
+              getAll("morale") > 0 && "text-green-600 font-bold",
+              getAll("morale") < 0 && "text-red-600 font-bold",
             ])}
           >
             의욕
           </div>
-          <div className="w-full border-2 border-black h-4 flex relative">
+          <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
             <div
               className="h-full bg-zinc-400"
               style={{ width: `${students[selected - 1].morale * 10}%` }}
@@ -187,14 +178,11 @@ export default function Homework() {
             <div
               className={cc([
                 "h-full bg-zinc-400 opacity-50",
-                homework[selectedHw].stat.morale &&
-                  homework[selectedHw].stat.morale! < 0 &&
+                getAll("morale") < 0 &&
                   "!bg-red-700 -translate-x-full absolute",
               ])}
               style={{
-                width: `${
-                  Math.abs(homework[selectedHw].stat.morale ?? 0) * 10
-                }%`,
+                width: `${Math.abs(getAll("morale")) * 10}%`,
                 left: `${students[selected - 1].morale * 10}%`,
               }}
             ></div>
@@ -212,7 +200,7 @@ export default function Homework() {
           >
             체력
           </div>
-          <div className="w-full border-2 border-black h-4 flex relative">
+          <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
             <div
               className="h-full bg-red-400"
               style={{ width: `${students[selected - 1].hp * 10}%` }}
@@ -225,11 +213,26 @@ export default function Homework() {
                   "!bg-red-700 absolute -translate-x-full",
               ])}
               style={{
-                width: `${Math.abs(homework[selectedHw].stat.hp ?? 0) * 10}%`,
+                width: `${Math.abs(getAll("hp")) * 10}%`,
                 left: `${students[selected - 1].hp * 10}%`,
               }}
             ></div>
           </div>
+        </div>
+        <div className="w-full flex flex-wrap mt-2 gap-2">
+          {students[selected - 1].buffs
+            .filter((buff) => buff.month + buff.duration >= month)
+            .map((buff, i) => (
+              <div
+                className="tooltip text-sm border-2 border-black px-1 py-0.5 text-white bg-black rounded"
+                key={i}
+                data-tip={buff.description
+                  .replace("%grade", `${buff.grade}`)
+                  .replace("%month", `${buff.month}`)}
+              >
+                {buff.name}
+              </div>
+            ))}
         </div>
       </div>
       <div className="mt-2 flex justify-center">
@@ -241,29 +244,17 @@ export default function Homework() {
               students.map((student, i) => {
                 return {
                   ...student,
-                  gpa: Math.max(
-                    Math.min(student.gpa + (homeworks[i].stat.gpa ?? 0), 10),
-                    0
-                  ),
-                  sat: Math.max(
-                    Math.min(student.sat + (homeworks[i].stat.sat ?? 0), 10),
-                    0
-                  ),
+                  gpa: Math.max(Math.min(student.gpa + getAll("gpa"), 10), 0),
+                  sat: Math.max(Math.min(student.sat + getAll("sat"), 10), 0),
                   attitude: Math.max(
-                    Math.min(
-                      student.attitude + (homeworks[i].stat.attitude ?? 0),
-                      10
-                    ),
+                    Math.min(student.attitude + getAll("attitude"), 10),
                     0
                   ),
                   morale: Math.max(
-                    Math.min(
-                      student.morale + (homeworks[i].stat.morale ?? 0),
-                      10
-                    ),
+                    Math.min(student.morale + (getAll("morale") ?? 0), 10),
                     0
                   ),
-                  hp: Math.min(student.hp + (homeworks[i].stat.hp ?? 0), 10),
+                  hp: Math.min(student.hp + (getAll("hp") ?? 0), 10),
                 };
               })
             );

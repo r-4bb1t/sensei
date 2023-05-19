@@ -16,6 +16,7 @@ import Student from "@/components/Student";
 import { useStudentsContext } from "@/contexts/studentsContext";
 import Header from "@/components/Header";
 import Homework from "@/components/Homework";
+import Ending from "@/components/Ending";
 
 const Window = ({
   w,
@@ -47,7 +48,7 @@ const Window = ({
           : { scaleX: 0, scaleY: 0, transition: { duration: 0.1 } }
       }
       className={cc([
-        "window absolute",
+        "window absolute overflow-visible",
         w.type === WindowType.studentlist && "h-96 w-32",
         w.type === WindowType.cctv && "w-[540px] h-[528px]",
         w.type === WindowType.homework && "w-64",
@@ -76,6 +77,7 @@ const Window = ({
                 [WindowType.studentlist]: "출석부",
                 [WindowType.cctv]: "교실",
                 [WindowType.homework]: "숙제",
+                [WindowType.ending]: "엔딩",
               }[w.type]
             }
           </h1>
@@ -88,6 +90,7 @@ const Window = ({
         {w.type === WindowType.cctv && <CCTV />}
         {w.type === WindowType.student && <Student id={w.data?.id} />}
         {w.type === WindowType.homework && <Homework />}
+        {w.type === WindowType.ending && <Ending />}
       </div>
     </motion.div>
   );
@@ -159,7 +162,7 @@ const Home: NextPage = () => {
               windows.filter((w) => w.type === WindowType.studentlist).length ==
               0
             )
-              setWindows([
+              setWindows((windows) => [
                 ...windows,
                 {
                   type: WindowType.studentlist,
@@ -181,7 +184,7 @@ const Home: NextPage = () => {
           className="hover:bg-[rgba(0,0,0,0.2)] w-16 h-20 flex flex-col items-center"
           onClick={(e) => {
             if (windows.filter((w) => w.type === WindowType.cctv).length == 0)
-              setWindows([
+              setWindows((windows) => [
                 ...windows,
                 {
                   type: WindowType.cctv,
@@ -203,7 +206,7 @@ const Home: NextPage = () => {
             if (
               windows.filter((w) => w.type === WindowType.homework).length == 0
             )
-              setWindows([
+              setWindows((windows) => [
                 ...windows,
                 {
                   type: WindowType.homework,
