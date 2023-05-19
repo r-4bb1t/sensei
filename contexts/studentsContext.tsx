@@ -1,4 +1,5 @@
 import { BuffList, Student } from "@/constants/types";
+import { initialStudents } from "@/constants/values";
 import { WindowProps, WindowType } from "@/constants/window";
 import {
   Dispatch,
@@ -21,6 +22,7 @@ interface StudentsContextProps {
   setEnding: Dispatch<
     SetStateAction<{ gpa: number[]; sat: number[]; specialist: number[] }>
   >;
+  reset: Function;
 }
 
 const StudentsContext = createContext<StudentsContextProps>({
@@ -32,18 +34,10 @@ const StudentsContext = createContext<StudentsContextProps>({
   setMonth: () => {},
   ending: { gpa: [], sat: [], specialist: [] },
   setEnding: () => {},
+  reset: () => {},
 });
 
 const getGrade = (num: number) => {
-  /* - [gpa 10] => [중간고사, 기말고사 A+] -1~0gpa
-- [gpa 8~9] => [중간고사, 기말고사 A0] -2~+1gpa
-- [gpa 5~7] => [중간고사, 기말고사 B+] -2~+1gpa
-- [gpa ~4] => [중간고사, 기말고사 C+] -2~+1gpa
-
-- [sat 10] => [3모의, 9모의 A+] -1~0sat
-- [sat 8~9] => [3모의, 9모의 A0] -2~+1gpa
-- [sat 5~7] => [3모의, 9모의 B+] -2~+1gpa
-- [sat ~4] => [3모의, 9모의 C+] -2~+1gpa */
   num += Math.random() * 3 - 2;
 
   if (num >= 10) return "A+";
@@ -99,116 +93,7 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
     specialist: number[];
   }>({ gpa: [], sat: [], specialist: [] });
   const [windows, setWindows] = useState<WindowProps[]>([]);
-  const [students, setStudents] = useState<Student[]>([
-    {
-      index: 1,
-      name: "강태웅",
-      gpa: 6,
-      sat: 7,
-      attitude: 8,
-      hp: 10,
-      morale: 3,
-      buffs: [],
-      grade: [],
-      lastHomework: 0,
-    },
-    {
-      index: 2,
-      name: "김채린",
-      gpa: 1,
-      sat: 1,
-      attitude: 1,
-      hp: 10,
-      morale: 10,
-      buffs: [],
-      grade: [],
-      lastHomework: 0,
-    },
-    {
-      index: 3,
-      name: "김현채",
-      gpa: 1,
-      sat: 7,
-      attitude: 5,
-      hp: 10,
-      morale: 3,
-      buffs: [],
-      grade: [],
-      lastHomework: 0,
-    },
-    {
-      index: 4,
-      name: "나마로",
-      gpa: 1,
-      sat: 1,
-      attitude: 1,
-      hp: 10,
-      morale: 10,
-      buffs: [],
-      grade: [],
-      lastHomework: 0,
-    },
-    {
-      index: 5,
-      name: "남영우",
-      gpa: 7,
-      sat: 5,
-      attitude: 9,
-      hp: 10,
-      morale: 8,
-      buffs: [],
-      grade: [],
-      lastHomework: 0,
-    },
-    {
-      index: 6,
-      name: "송상화",
-      gpa: 7,
-      sat: 5,
-      attitude: 6,
-      hp: 10,
-      morale: 7,
-      buffs: [],
-      grade: [],
-      lastHomework: 0,
-    },
-    {
-      index: 7,
-      name: "은가은",
-      gpa: 4,
-      sat: 9,
-      attitude: 3,
-      hp: 10,
-      morale: 4,
-      buffs: [],
-      grade: [],
-      lastHomework: 0,
-    },
-    {
-      index: 8,
-      name: "양제현",
-      gpa: 7,
-      sat: 1,
-      attitude: 5,
-      hp: 10,
-      morale: 7,
-      buffs: [],
-      grade: [],
-      lastHomework: 0,
-    },
-    {
-      index: 9,
-      name: "홍준영",
-      gpa: 7,
-      sat: 7,
-      attitude: 1,
-      hp: 10,
-      morale: 10,
-      buffs: [],
-      grade: [],
-      lastHomework: 0,
-    },
-  ]);
+  const [students, setStudents] = useState<Student[]>(initialStudents);
   useEffect(() => {
     if (month == 4 || month == 6 || month == 10) {
       setStudents((students) =>
@@ -292,6 +177,13 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [month]);
 
+  const reset = () => {
+    setStudents(initialStudents);
+    setEnding({ gpa: [], sat: [], specialist: [] });
+    setMonth(3);
+    setWindows([]);
+  };
+
   return (
     <StudentsContext.Provider
       value={{
@@ -303,6 +195,7 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
         setMonth,
         ending,
         setEnding,
+        reset,
       }}
     >
       {children}

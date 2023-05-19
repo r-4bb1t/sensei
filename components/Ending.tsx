@@ -1,7 +1,7 @@
 import { useStudentsContext } from "@/contexts/studentsContext";
 
 export default function Ending() {
-  const { ending, students } = useStudentsContext();
+  const { ending, students, reset } = useStudentsContext();
   return (
     <div className="w-full">
       <div className="w-full flex flex-col items-center px-4 py-4">
@@ -53,6 +53,13 @@ export default function Ending() {
             ))}
           </div>
         </div>
+
+        <button
+          className="mt-4 px-4 py-1 hover:bg-black hover:text-white border-black border-2"
+          onClick={() => reset()}
+        >
+          다시하기
+        </button>
       </div>
     </div>
   );
