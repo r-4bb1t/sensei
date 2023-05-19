@@ -2,7 +2,7 @@ import { Fragment } from "react";
 
 export default function Background({ size }: { size: number }) {
   return (
-    <div className="w-full gap-0 grid grid-cols-8">
+    <div className="w-full gap-0 grid md:grid-cols-8 grid-cols-6">
       <img src="/assets/tiles/border_tl.png" className="w-full" />
       {[...Array(size)].map((_, i) => (
         <Fragment key={i}>

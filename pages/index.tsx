@@ -17,6 +17,7 @@ import { useStudentsContext } from "@/contexts/studentsContext";
 import Header from "@/components/Header";
 import Homework from "@/components/Homework";
 import Ending from "@/components/Ending";
+import Footer from "@/components/Footer";
 
 const Window = ({
   w,
@@ -96,7 +97,7 @@ const Window = ({
 };
 
 const Home: NextPage = () => {
-  const { windows, setWindows } = useStudentsContext();
+  const { windows, setWindows, mobileTab, setMobileTab } = useStudentsContext();
   const [layer, setLayer] = useState([0, 0]);
 
   const moveWindow = useCallback(
@@ -146,7 +147,7 @@ const Home: NextPage = () => {
     <div className="bg-[#ff8e96] flex h-screen flex-col overflow-hidden">
       <Header />
       <main
-        className="flex h-full w-full flex-col py-16 px-8 overflow-hidden gap-2"
+        className="hidden md:flex h-full w-full flex-col py-16 px-8 overflow-hidden gap-2"
         ref={drop}
       >
         <div className="flex absolute inset-0 w-full h-full items-center justify-center pointer-events-none">
@@ -234,7 +235,7 @@ const Home: NextPage = () => {
       </main>
       <div
         className={cc([
-          "pointer-events-none absolute inset-0 z-10 h-full w-full",
+          "hidden md:block pointer-events-none absolute inset-0 z-10 h-full w-full",
         ])}
       >
         <div
@@ -254,6 +255,20 @@ const Home: NextPage = () => {
           )}
         </div>
       </div>
+      <div className="w-full h-screen md:hidden">
+        {
+          {
+            [WindowType.student]: <Student />,
+            [WindowType.studentlist]: (
+              <StudentsList w={undefined} setWindows={undefined} />
+            ),
+            [WindowType.cctv]: <CCTV />,
+            [WindowType.homework]: <Homework />,
+            [WindowType.ending]: <Ending />,
+          }[mobileTab]
+        }
+      </div>
+      <Footer />
     </div>
   );
 };

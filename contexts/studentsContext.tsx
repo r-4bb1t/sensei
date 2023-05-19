@@ -23,6 +23,9 @@ interface StudentsContextProps {
     SetStateAction<{ gpa: number[]; sat: number[]; specialist: number[] }>
   >;
   reset: Function;
+  mobileTab: WindowType;
+  setMobileTab: Dispatch<SetStateAction<WindowType>>;
+  isMobile: boolean;
 }
 
 const StudentsContext = createContext<StudentsContextProps>({
@@ -35,6 +38,9 @@ const StudentsContext = createContext<StudentsContextProps>({
   ending: { gpa: [], sat: [], specialist: [] },
   setEnding: () => {},
   reset: () => {},
+  mobileTab: WindowType.cctv,
+  setMobileTab: () => {},
+  isMobile: false,
 });
 
 const getGrade = (num: number) => {
@@ -86,14 +92,24 @@ const getBuff = (
 };
 
 const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
+  const [windows, setWindows] = useState<WindowProps[]>([]);
+  const [mobileTab, setMobileTab] = useState<WindowType>(WindowType.cctv);
+  const [isMobile, setIsMobile] = useState(false);
+
   const [month, setMonth] = useState(3);
   const [ending, setEnding] = useState<{
     gpa: number[];
     sat: number[];
     specialist: number[];
   }>({ gpa: [], sat: [], specialist: [] });
-  const [windows, setWindows] = useState<WindowProps[]>([]);
   const [students, setStudents] = useState<Student[]>(initialStudents);
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+    window.addEventListener("resize", () => {
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+    });
+  }, []);
   useEffect(() => {
     if (month == 4 || month == 6 || month == 10) {
       setStudents((students) =>
@@ -196,6 +212,9 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
         ending,
         setEnding,
         reset,
+        mobileTab,
+        setMobileTab,
+        isMobile,
       }}
     >
       {children}
