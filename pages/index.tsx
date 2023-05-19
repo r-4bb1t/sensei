@@ -49,7 +49,6 @@ const Window = ({
       }
       className={cc([
         "window absolute overflow-visible",
-        w.type === WindowType.studentlist && "h-96 w-32",
         w.type === WindowType.cctv && "w-[540px] h-[528px]",
         w.type === WindowType.homework && "w-64",
         isDragging && "hidden",
