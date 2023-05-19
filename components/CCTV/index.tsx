@@ -1,3 +1,4 @@
+import { useStudentsContext } from "@/contexts/studentsContext";
 import Background from "./Background";
 import Objects from "./Objects";
 import Studying from "./Studying";
@@ -5,13 +6,14 @@ import Studying from "./Studying";
 const size = 3;
 
 export default function CCTV() {
+  const { month } = useStudentsContext();
   return (
     <>
       <div className="relative window-pane pointer-events-none h-full break-all !p-0 bg-black-800">
         <div className="relative" style={{ width: `${(size * 2 + 2) * 64}px` }}>
           <Background size={size} />
           <Objects size={size} />
-          <Studying size={size} />
+          {month !== 8 && month !== 13 && <Studying size={size} />}
         </div>
         <div className="w-full h-full absolute inset-0 pointer-events-none">
           <img
