@@ -126,7 +126,7 @@ export default function Homework() {
             <div
               className={cc([
                 "h-full bg-green-400 opacity-50",
-                getAll("sat") && "!bg-red-700 -translate-x-full absolute",
+                getAll("sat") < 0 && "!bg-red-700 -translate-x-full absolute",
               ])}
               style={{
                 width: `${Math.abs(getAll("sat")) * 10}%`,
@@ -190,12 +190,8 @@ export default function Homework() {
           <div
             className={cc([
               "text-right",
-              homework[selectedHw].stat.hp &&
-                homework[selectedHw].stat.hp! > 0 &&
-                "text-green-600 font-bold",
-              homework[selectedHw].stat.hp &&
-                homework[selectedHw].stat.hp! < 0 &&
-                "text-red-600 font-bold",
+              getAll("hp") > 0 && "text-green-600 font-bold",
+              getAll("hp") < 0 && "text-red-600 font-bold",
             ])}
           >
             체력
@@ -208,9 +204,7 @@ export default function Homework() {
             <div
               className={cc([
                 "h-full bg-red-400 opacity-50",
-                homework[selectedHw].stat.hp &&
-                  homework[selectedHw].stat.hp! < 0 &&
-                  "!bg-red-700 absolute -translate-x-full",
+                getAll("hp") < 0 && "!bg-red-700 absolute -translate-x-full",
               ])}
               style={{
                 width: `${Math.abs(getAll("hp")) * 10}%`,
