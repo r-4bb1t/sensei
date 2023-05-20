@@ -3,6 +3,8 @@ export enum WindowType {
   "student",
   "cctv",
   "homework",
+  "message",
+  "messagelist",
   "ending",
 }
 

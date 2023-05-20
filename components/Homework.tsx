@@ -55,7 +55,7 @@ export default function Homework() {
         ))}
       </div>
       <div className="font-bold text-lg text-center">
-        {students[selected - 1].name} 학생의 이번 달 숙제
+        {students[selected - 1].name} 학생의 {month}월 숙제
       </div>
       <select
         className="w-full px-2 font-bold mt-2"

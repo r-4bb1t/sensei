@@ -190,7 +190,18 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
           .filter((student) => student.gpa >= 5 && student.attitude >= 8)
           .map((student) => student.index),
       });
-    }
+    } else if (
+      windows.filter((w) => w.type === WindowType.homework).length == 0
+    )
+      setWindows((windows) => [
+        ...windows,
+        {
+          type: WindowType.homework,
+          top: 160,
+          left: 300,
+          id: new Date().toString() + Math.random().toString(),
+        },
+      ]);
   }, [month]);
 
   const reset = () => {

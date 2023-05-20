@@ -2,14 +2,8 @@ import { WindowProps, WindowType } from "@/constants/window";
 import { useStudentsContext } from "@/contexts/studentsContext";
 import { Dispatch, SetStateAction } from "react";
 
-export default function StudentList({
-  w,
-  setWindows,
-}: {
-  w?: WindowProps;
-  setWindows?: Dispatch<SetStateAction<WindowProps[]>>;
-}) {
-  const { students, month } = useStudentsContext();
+export default function StudentList({ w }: { w?: WindowProps }) {
+  const { students, month, setWindows } = useStudentsContext();
   return (
     <>
       <div className="md:window-pane pointer-events-none h-full break-all bg-white">
@@ -27,7 +21,7 @@ export default function StudentList({
               <tr
                 className="pointer-events-auto cursor-pointer group hover:bg-black hover:text-white"
                 onClick={() => {
-                  if (setWindows && w)
+                  if (w)
                     setWindows((ww) => [
                       ...ww,
                       {

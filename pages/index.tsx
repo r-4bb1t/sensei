@@ -18,6 +18,8 @@ import Header from "@/components/Header";
 import Homework from "@/components/Homework";
 import Ending from "@/components/Ending";
 import Footer from "@/components/Footer";
+import MessageList from "@/components/MessageList";
+import Message from "@/components/Message";
 
 const Window = ({
   w,
@@ -77,6 +79,8 @@ const Window = ({
                 [WindowType.studentlist]: "출석부",
                 [WindowType.cctv]: "교실",
                 [WindowType.homework]: "숙제",
+                [WindowType.messagelist]: "메시지",
+                [WindowType.message]: "메시지",
                 [WindowType.ending]: "엔딩",
               }[w.type]
             }
@@ -84,13 +88,13 @@ const Window = ({
           <button aria-label="resize" disabled className="hidden"></button>
         </div>
 
-        {w.type === WindowType.studentlist && (
-          <StudentsList w={w} setWindows={setWindows} />
-        )}
+        {w.type === WindowType.studentlist && <StudentsList w={w} />}
         {w.type === WindowType.cctv && <CCTV />}
         {w.type === WindowType.student && <Student id={w.data?.id} />}
         {w.type === WindowType.homework && <Homework />}
         {w.type === WindowType.ending && <Ending />}
+        {w.type === WindowType.messagelist && <MessageList w={w} />}
+        {w.type === WindowType.message && <Message id={w.data?.id} />}
       </div>
     </motion.div>
   );
@@ -232,6 +236,31 @@ const Home: NextPage = () => {
           <img src="/assets/icons/homework.png" className="w-12 h-12" />
           <div className="text-white px-1 mt-2">숙제</div>
         </button>
+        <button
+          className="hover:bg-[rgba(0,0,0,0.2)] w-16 h-20 flex flex-col items-center"
+          onClick={(e) => {
+            if (
+              windows.filter((w) => w.type === WindowType.messagelist).length ==
+              0
+            )
+              setWindows((windows) => [
+                ...windows,
+                {
+                  type: WindowType.messagelist,
+                  top: e.clientY,
+                  left: e.clientX + 20,
+                  id: new Date().toString() + Math.random().toString(),
+                },
+              ]);
+            else
+              setWindows((w) =>
+                w.filter((ww) => ww.type !== WindowType.messagelist)
+              );
+          }}
+        >
+          <img src="/assets/icons/message.png" className="w-12 h-12" />
+          <div className="text-white px-1 mt-2">메시지</div>
+        </button>
       </main>
       <div
         className={cc([
@@ -259,12 +288,12 @@ const Home: NextPage = () => {
         {
           {
             [WindowType.student]: <Student />,
-            [WindowType.studentlist]: (
-              <StudentsList w={undefined} setWindows={undefined} />
-            ),
+            [WindowType.studentlist]: <StudentsList w={undefined} />,
             [WindowType.cctv]: <CCTV />,
             [WindowType.homework]: <Homework />,
             [WindowType.ending]: <Ending />,
+            [WindowType.messagelist]: <MessageList w={undefined} />,
+            [WindowType.message]: <Message />,
           }[mobileTab]
         }
       </div>
