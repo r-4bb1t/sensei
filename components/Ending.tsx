@@ -11,7 +11,7 @@ export default function Ending() {
           <div className="rounded-full border-2 border-black w-8 h-8 flex items-center justify-center">
             경
           </div>
-          <div className="font-bold text-lg">
+          <div className="font-bold text-lg text-center">
             수시 {ending.gpa.length}명 정시 {ending.sat.length}명 특기자{" "}
             {ending.specialist.length}명
           </div>
