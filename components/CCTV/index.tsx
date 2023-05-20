@@ -16,9 +16,9 @@ export default function CCTV() {
   return (
     <>
       <div className="relative md:window-pane pointer-events-none h-full break-all !p-0 bg-black-800">
-        <div className="w-full md:h-auto h-screen flex items-center pb-[40%] justify-center md:block">
+        <div className="w-full md:h-auto h-full flex items-center pb-[40%] md:pb-0 justify-center md:block">
           <div
-            className="relative max-w-full md:scale-100 scale-125"
+            className="relative max-w-full md:scale-100 scale-[1.4]"
             style={{ width: `${(size * 2 + 2) * 64}px` }}
           >
             <Background size={size} />

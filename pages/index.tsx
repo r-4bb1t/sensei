@@ -148,7 +148,7 @@ const Home: NextPage = () => {
   }, [currentOffset]);
 
   return (
-    <div className="bg-[#ff8e96] flex h-screen flex-col overflow-hidden">
+    <div className="md:bg-[#ff8e96] bg-white flex h-screen flex-col overflow-hidden">
       <Header />
       <main
         className="hidden md:flex h-full w-full flex-col py-16 px-8 overflow-hidden gap-2"
@@ -284,7 +284,7 @@ const Home: NextPage = () => {
           )}
         </div>
       </div>
-      <div className="w-full h-screen md:hidden">
+      <div className="w-full h-screen md:hidden pt-24">
         {
           {
             [WindowType.student]: <Student />,
