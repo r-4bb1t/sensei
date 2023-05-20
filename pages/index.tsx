@@ -190,7 +190,7 @@ const Home: NextPage = () => {
           }}
         >
           <img src="/assets/icons/studentslist.png" className="w-12 h-12" />
-          <div className="text-white px-1 mt-2">출석부</div>
+          <div className="font-bold px-1 mt-2">출석부</div>
         </button>
         <button
           className="hover:bg-[rgba(0,0,0,0.2)] w-16 h-20 flex flex-col items-center"
@@ -210,7 +210,7 @@ const Home: NextPage = () => {
           }}
         >
           <img src="/assets/icons/cctv.png" className="w-12 h-12" />
-          <div className="text-white px-1 mt-2">교실</div>
+          <div className="font-bold px-1 mt-2">교실</div>
         </button>
         <button
           className="hover:bg-[rgba(0,0,0,0.2)] w-16 h-20 flex flex-col items-center"
@@ -234,7 +234,7 @@ const Home: NextPage = () => {
           }}
         >
           <img src="/assets/icons/homework.png" className="w-12 h-12" />
-          <div className="text-white px-1 mt-2">숙제</div>
+          <div className="font-bold px-1 mt-2">숙제</div>
         </button>
         <button
           className="hover:bg-[rgba(0,0,0,0.2)] w-16 h-20 flex flex-col items-center"
@@ -259,7 +259,7 @@ const Home: NextPage = () => {
           }}
         >
           <img src="/assets/icons/message.png" className="w-12 h-12" />
-          <div className="text-white px-1 mt-2">메시지</div>
+          <div className="font-bold px-1 mt-2">메시지</div>
         </button>
       </main>
       <div

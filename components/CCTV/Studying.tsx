@@ -4,16 +4,12 @@ import StudentItem from "./StudentItem";
 export default function Studying({ size }: { size: number }) {
   const { students } = useStudentsContext();
   return (
-    <div className="absolute top-0 left-0 w-full animate-study origin-bottom gap-0 grid grid-cols-6 md:grid-cols-8">
+    <div className="absolute top-0 left-0 w-full origin-bottom gap-0 grid grid-cols-6 md:grid-cols-8">
       {[...Array(size * 2 + 2)].map((_, i) => (
         <img src="/assets/blank.png" className="w-full" key={i} />
       ))}
       {[...Array(size * 2 + 2)].map((_, i) => (
-        <img
-          src="/assets/blank.png"
-          className="w-full animate-study origin-bottom"
-          key={i}
-        />
+        <img src="/assets/blank.png" className="w-full origin-bottom" key={i} />
       ))}
       <img src="/assets/blank.png" className="w-full md:inline hidden" />
       <img src="/assets/blank.png" className="w-full" />

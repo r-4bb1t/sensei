@@ -143,7 +143,7 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
             grade: [...student.grade, grade],
             buffs: [
               ...student.buffs,
-              ...getBuff("gpa", student.gpa, grade, month),
+              ...getBuff("gpa", student.gpa, grade, month - 1),
             ],
           };
         })
@@ -159,12 +159,12 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
             grade: [...student.grade, grade],
             buffs: [
               ...student.buffs,
-              ...getBuff("sat", student.sat, grade, month),
+              ...getBuff("sat", student.sat, grade, month - 1),
             ],
           };
         })
       );
-    } // 모고성적
+    } // 모평성적
 
     if (month == 13) {
       setWindows((windows) => [

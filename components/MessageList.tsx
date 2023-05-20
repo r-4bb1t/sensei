@@ -11,20 +11,20 @@ export default function MessageList({ w }: { w?: WindowProps }) {
           className="cursor-pointer group hover:bg-black hover:text-white flex border-b-2 border-b-black items-center"
           key={i}
           onClick={() => {
-            /* if (w)
+            if (w)
               setWindows((ww) => [
                 ...ww,
                 {
                   type: WindowType.message,
-                  id: `${student.index}` + Math.random().toString(),
-                  index: student.index,
+                  id: `afsd` + Math.random().toString(),
+                  index: i,
                   top: (w.top + 50) % window.innerHeight,
                   left: (w.left + 50) % window.innerWidth,
                   data: {
-                    id: student.index,
+                    id: i,
                   },
                 },
-              ]); */
+              ]);
           }}
         >
           <div className="h-14 w-14 flex items-center justify-center px-2 pt-3 pb-1">

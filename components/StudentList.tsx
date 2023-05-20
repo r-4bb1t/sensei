@@ -1,6 +1,7 @@
 import { WindowProps, WindowType } from "@/constants/window";
 import { useStudentsContext } from "@/contexts/studentsContext";
 import { Dispatch, SetStateAction } from "react";
+import BuffBadge from "./BuffBadge";
 
 export default function StudentList({ w }: { w?: WindowProps }) {
   const { students, month, setWindows } = useStudentsContext();
@@ -54,15 +55,7 @@ export default function StudentList({ w }: { w?: WindowProps }) {
                     {student.buffs
                       .filter((buff) => buff.month + buff.duration >= month)
                       .map((buff, i) => (
-                        <div
-                          className="tooltip text-sm border-2 group-hover:bg-white group-hover:text-black border-black px-1 py-0.5 text-white bg-black rounded"
-                          key={i}
-                          data-tip={buff.description
-                            .replace("%grade", `${buff.grade}`)
-                            .replace("%month", `${buff.month}`)}
-                        >
-                          {buff.name}
-                        </div>
+                        <BuffBadge buff={buff} hideDisabled key={i} />
                       ))}
                   </div>
                 </td>

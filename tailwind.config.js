@@ -25,7 +25,7 @@ module.exports = {
         },
       },
       animation: {
-        study: "study 0.2s infinite",
+        study: "study-big 0.5s infinite",
         "study-big": "study-big 1s infinite",
       },
       colors: {

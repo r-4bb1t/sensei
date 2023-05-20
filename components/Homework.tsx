@@ -3,6 +3,7 @@ import Student from "./Student";
 import { useEffect, useRef, useState } from "react";
 import cc from "classcat";
 import { homework } from "@/constants/types";
+import BuffBadge from "./BuffBadge";
 
 export default function Homework() {
   const [selected, setSelected] = useState(1);
@@ -116,7 +117,7 @@ export default function Homework() {
               getAll("sat") < 0 && "text-red-600 font-bold",
             ])}
           >
-            모고
+            모평
           </div>
           <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
             <div
@@ -217,15 +218,7 @@ export default function Homework() {
           {students[selected - 1].buffs
             .filter((buff) => buff.month + buff.duration >= month)
             .map((buff, i) => (
-              <div
-                className="tooltip text-sm border-2 border-black px-1 py-0.5 text-white bg-black rounded"
-                key={i}
-                data-tip={buff.description
-                  .replace("%grade", `${buff.grade}`)
-                  .replace("%month", `${buff.month}`)}
-              >
-                {buff.name}
-              </div>
+              <BuffBadge buff={buff} key={i} hideDisabled />
             ))}
         </div>
       </div>

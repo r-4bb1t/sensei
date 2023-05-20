@@ -2,6 +2,7 @@ import { useStudentsContext } from "@/contexts/studentsContext";
 import Grade from "./Grade";
 import { useEffect, useState } from "react";
 import cc from "classcat";
+import BuffBadge from "./BuffBadge";
 
 export default function Student({ id = 1 }: { id?: number }) {
   const [rId, setRId] = useState(id);
@@ -73,18 +74,7 @@ export default function Student({ id = 1 }: { id?: number }) {
       <div className="mt-2 font-bold">역대 버프 목록</div>
       <div className="px-4 mt-2 flex flex-wrap w-full gap-2">
         {student.buffs.map((buff, i) => (
-          <div
-            className={cc([
-              "tooltip text-sm border-2 border-black px-1 py-0.5 text-white bg-black rounded",
-              buff.month + buff.duration < month && "!opacity-50",
-            ])}
-            key={i}
-            data-tip={buff.description
-              .replace("%grade", `${buff.grade}`)
-              .replace("%month", `${buff.month}`)}
-          >
-            {buff.name}
-          </div>
+          <BuffBadge buff={buff} key={i} />
         ))}
       </div>
 

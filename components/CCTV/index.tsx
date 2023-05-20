@@ -28,7 +28,7 @@ export default function CCTV() {
           <div className="w-full h-full absolute inset-0 pointer-events-none">
             <img
               src="/assets/noise.gif"
-              className="w-full h-full mix-blend-overlay opacity-50"
+              className="w-full h-full mix-blend-overlay opacity-30"
             />
           </div>
         </div>
