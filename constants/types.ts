@@ -72,6 +72,12 @@ export const BuffList = {
     effect: { hp: -1 },
     duration: 0,
   },
+  recovery: {
+    name: "회복 중",
+    description: "아직 회복 중입니다. 의욕이 나지 않는군요.",
+    effect: { morale: -1 },
+    duration: 2,
+  },
 };
 
 export const monthDescription = [

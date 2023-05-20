@@ -2,7 +2,7 @@ import { useStudentsContext } from "@/contexts/studentsContext";
 import Student from "./Student";
 import { useEffect, useRef, useState } from "react";
 import cc from "classcat";
-import { homework } from "@/constants/types";
+import { BuffList, homework } from "@/constants/types";
 import BuffBadge from "./BuffBadge";
 
 export default function Homework() {
@@ -44,6 +44,7 @@ export default function Homework() {
             className={cc([
               "hover:bg-[rgba(0,0,0,0.2)] p-1 border-2 border-transparent",
               selected == i + 1 && "!border-black",
+              students[selected - 1].hp == 0 && "opacity-25",
             ])}
             key={i}
             onClick={() => setSelected(i + 1)}
@@ -58,168 +59,185 @@ export default function Homework() {
       <div className="font-bold text-lg text-center">
         {students[selected - 1].name} 학생의 {month}월 숙제
       </div>
-      <select
-        className="w-full px-2 font-bold mt-2"
-        ref={selectRef}
-        onChange={(e) =>
-          setHomeworks((homeworks) =>
-            homeworks.map((hw, i) => {
-              if (i === selected - 1) return homework[parseInt(e.target.value)];
-              return hw;
-            })
-          )
-        }
-      >
-        {homework.map((hw, i) => (
-          <option key={i} value={i}>
-            {hw.name}
-          </option>
-        ))}
-      </select>
-      <div className="border-black border-2 mt-2 px-2 py-1 flex flex-col items-center">
-        <div className="w-full text-sm mb-2 h-16">
-          {homework[selectedHw].description}
-        </div>
-        <div className="w-full text-sm mb-2 font-bold">
-          {students[selected - 1].name}의 예상 스탯 변화
-        </div>
-
-        <div className="grid grid-cols-[48px_1fr_48px_1fr] gap-2 w-full pr-4 items-center">
-          <div
-            className={cc([
-              "text-right",
-              getAll("gpa") > 0 && "text-green-600 font-bold",
-              getAll("gpa") < 0 && "text-red-600 font-bold",
-            ])}
+      <div className="relative">
+        {students[selected - 1].hp == 0 && (
+          <div className="w-full h-full absolute flex items-center justify-center text-lg font-bold">
+            병결
+          </div>
+        )}
+        <div
+          className={cc([
+            students[selected - 1].hp == 0 && "opacity-25 pointer-events-none",
+          ])}
+        >
+          <select
+            className="w-full px-2 font-bold mt-2"
+            ref={selectRef}
+            onChange={(e) =>
+              setHomeworks((homeworks) =>
+                homeworks.map((hw, i) => {
+                  if (i === selected - 1)
+                    return homework[parseInt(e.target.value)];
+                  return hw;
+                })
+              )
+            }
           >
-            내신
-          </div>
-          <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
-            <div
-              className="h-full bg-yellow-400"
-              style={{ width: `${students[selected - 1].gpa * 10}%` }}
-            ></div>
-            <div
-              className={cc([
-                "h-full bg-yellow-400 opacity-50",
-                getAll("gpa") < 0 && "!bg-red-700 -translate-x-full absolute",
-              ])}
-              style={{
-                width: `${Math.abs(getAll("gpa") ?? 0) * 10}%`,
-                left: `${students[selected - 1].gpa * 10}%`,
-              }}
-            ></div>
-          </div>
-          <div
-            className={cc([
-              "text-right",
-              getAll("sat") > 0 && "text-green-600 font-bold",
-              getAll("sat") < 0 && "text-red-600 font-bold",
-            ])}
-          >
-            모평
-          </div>
-          <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
-            <div
-              className="h-full bg-green-400"
-              style={{ width: `${students[selected - 1].sat * 10}%` }}
-            ></div>
-            <div
-              className={cc([
-                "h-full bg-green-400 opacity-50",
-                getAll("sat") < 0 && "!bg-red-700 -translate-x-full absolute",
-              ])}
-              style={{
-                width: `${Math.abs(getAll("sat")) * 10}%`,
-                left: `${students[selected - 1].sat * 10}%`,
-              }}
-            ></div>
-          </div>
-          <div
-            className={cc([
-              "text-right",
-              getAll("attitude") > 0 && "text-green-600 font-bold",
-              getAll("attitude") < 0 && "text-red-600 font-bold",
-            ])}
-          >
-            태도
-          </div>
-          <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
-            <div
-              className="h-full bg-blue-400"
-              style={{ width: `${students[selected - 1].attitude * 10}%` }}
-            ></div>
-            <div
-              className={cc([
-                "h-full bg-blue-400 opacity-50",
-                getAll("attitude") < 0 &&
-                  "!bg-red-700 -translate-x-full absolute",
-              ])}
-              style={{
-                width: `${Math.abs(getAll("attitude") * 10)}%`,
-                left: `${students[selected - 1].attitude * 10}%`,
-              }}
-            ></div>
-          </div>
-
-          <div
-            className={cc([
-              "text-right",
-              getAll("morale") > 0 && "text-green-600 font-bold",
-              getAll("morale") < 0 && "text-red-600 font-bold",
-            ])}
-          >
-            의욕
-          </div>
-          <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
-            <div
-              className="h-full bg-zinc-400"
-              style={{ width: `${students[selected - 1].morale * 10}%` }}
-            ></div>
-            <div
-              className={cc([
-                "h-full bg-zinc-400 opacity-50",
-                getAll("morale") < 0 &&
-                  "!bg-red-700 -translate-x-full absolute",
-              ])}
-              style={{
-                width: `${Math.abs(getAll("morale")) * 10}%`,
-                left: `${students[selected - 1].morale * 10}%`,
-              }}
-            ></div>
-          </div>
-          <div
-            className={cc([
-              "text-right",
-              getAll("hp") > 0 && "text-green-600 font-bold",
-              getAll("hp") < 0 && "text-red-600 font-bold",
-            ])}
-          >
-            체력
-          </div>
-          <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
-            <div
-              className="h-full bg-red-400"
-              style={{ width: `${students[selected - 1].hp * 10}%` }}
-            ></div>
-            <div
-              className={cc([
-                "h-full bg-red-400 opacity-50",
-                getAll("hp") < 0 && "!bg-red-700 absolute -translate-x-full",
-              ])}
-              style={{
-                width: `${Math.abs(getAll("hp")) * 10}%`,
-                left: `${students[selected - 1].hp * 10}%`,
-              }}
-            ></div>
-          </div>
-        </div>
-        <div className="w-full flex flex-wrap mt-2 gap-2">
-          {students[selected - 1].buffs
-            .filter((buff) => buff.month + buff.duration >= month)
-            .map((buff, i) => (
-              <BuffBadge buff={buff} key={i} hideDisabled />
+            {homework.map((hw, i) => (
+              <option key={i} value={i}>
+                {hw.name}
+              </option>
             ))}
+          </select>
+          <div className="border-black border-2 mt-2 px-2 py-1 flex flex-col items-center">
+            <div className="w-full text-sm mb-2 h-16">
+              {homework[selectedHw].description}
+            </div>
+            <div className="w-full text-sm mb-2 font-bold">
+              {students[selected - 1].name}의 예상 스탯 변화
+            </div>
+
+            <div className="grid grid-cols-[48px_1fr_48px_1fr] gap-2 w-full pr-4 items-center">
+              <div
+                className={cc([
+                  "text-right",
+                  getAll("gpa") > 0 && "text-green-600 font-bold",
+                  getAll("gpa") < 0 && "text-red-600 font-bold",
+                ])}
+              >
+                내신
+              </div>
+              <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
+                <div
+                  className="h-full bg-yellow-400"
+                  style={{ width: `${students[selected - 1].gpa * 10}%` }}
+                ></div>
+                <div
+                  className={cc([
+                    "h-full bg-yellow-400 opacity-50",
+                    getAll("gpa") < 0 &&
+                      "!bg-red-700 -translate-x-full absolute",
+                  ])}
+                  style={{
+                    width: `${Math.abs(getAll("gpa") ?? 0) * 10}%`,
+                    left: `${students[selected - 1].gpa * 10}%`,
+                  }}
+                ></div>
+              </div>
+              <div
+                className={cc([
+                  "text-right",
+                  getAll("sat") > 0 && "text-green-600 font-bold",
+                  getAll("sat") < 0 && "text-red-600 font-bold",
+                ])}
+              >
+                모평
+              </div>
+              <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
+                <div
+                  className="h-full bg-green-400"
+                  style={{ width: `${students[selected - 1].sat * 10}%` }}
+                ></div>
+                <div
+                  className={cc([
+                    "h-full bg-green-400 opacity-50",
+                    getAll("sat") < 0 &&
+                      "!bg-red-700 -translate-x-full absolute",
+                  ])}
+                  style={{
+                    width: `${Math.abs(getAll("sat")) * 10}%`,
+                    left: `${students[selected - 1].sat * 10}%`,
+                  }}
+                ></div>
+              </div>
+              <div
+                className={cc([
+                  "text-right",
+                  getAll("attitude") > 0 && "text-green-600 font-bold",
+                  getAll("attitude") < 0 && "text-red-600 font-bold",
+                ])}
+              >
+                태도
+              </div>
+              <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
+                <div
+                  className="h-full bg-blue-400"
+                  style={{ width: `${students[selected - 1].attitude * 10}%` }}
+                ></div>
+                <div
+                  className={cc([
+                    "h-full bg-blue-400 opacity-50",
+                    getAll("attitude") < 0 &&
+                      "!bg-red-700 -translate-x-full absolute",
+                  ])}
+                  style={{
+                    width: `${Math.abs(getAll("attitude") * 10)}%`,
+                    left: `${students[selected - 1].attitude * 10}%`,
+                  }}
+                ></div>
+              </div>
+
+              <div
+                className={cc([
+                  "text-right",
+                  getAll("morale") > 0 && "text-green-600 font-bold",
+                  getAll("morale") < 0 && "text-red-600 font-bold",
+                ])}
+              >
+                의욕
+              </div>
+              <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
+                <div
+                  className="h-full bg-zinc-400"
+                  style={{ width: `${students[selected - 1].morale * 10}%` }}
+                ></div>
+                <div
+                  className={cc([
+                    "h-full bg-zinc-400 opacity-50",
+                    getAll("morale") < 0 &&
+                      "!bg-red-700 -translate-x-full absolute",
+                  ])}
+                  style={{
+                    width: `${Math.abs(getAll("morale")) * 10}%`,
+                    left: `${students[selected - 1].morale * 10}%`,
+                  }}
+                ></div>
+              </div>
+              <div
+                className={cc([
+                  "text-right",
+                  getAll("hp") > 0 && "text-green-600 font-bold",
+                  getAll("hp") < 0 && "text-red-600 font-bold",
+                ])}
+              >
+                체력
+              </div>
+              <div className="w-full border-2 border-black h-4 flex relative overflow-hidden">
+                <div
+                  className="h-full bg-red-400"
+                  style={{ width: `${students[selected - 1].hp * 10}%` }}
+                ></div>
+                <div
+                  className={cc([
+                    "h-full bg-red-400 opacity-50",
+                    getAll("hp") < 0 &&
+                      "!bg-red-700 absolute -translate-x-full",
+                  ])}
+                  style={{
+                    width: `${Math.abs(getAll("hp")) * 10}%`,
+                    left: `${students[selected - 1].hp * 10}%`,
+                  }}
+                ></div>
+              </div>
+            </div>
+            <div className="w-full flex flex-wrap mt-2 gap-2">
+              {students[selected - 1].buffs
+                .filter((buff) => buff.month + buff.duration >= month)
+                .map((buff, i) => (
+                  <BuffBadge buff={buff} key={i} hideDisabled />
+                ))}
+            </div>
+          </div>
         </div>
       </div>
       <div className="mt-2 flex justify-center">
@@ -229,20 +247,30 @@ export default function Homework() {
             setMonth((month) => month + 1);
             setStudents((students) =>
               students.map((student, i) => {
-                return {
-                  ...student,
-                  gpa: Math.max(Math.min(student.gpa + getAll("gpa"), 10), 0),
-                  sat: Math.max(Math.min(student.sat + getAll("sat"), 10), 0),
-                  attitude: Math.max(
-                    Math.min(student.attitude + getAll("attitude"), 10),
-                    0
-                  ),
-                  morale: Math.max(
-                    Math.min(student.morale + (getAll("morale") ?? 0), 10),
-                    0
-                  ),
-                  hp: Math.min(student.hp + (getAll("hp") ?? 0), 10),
-                };
+                if (student.hp > 0)
+                  return {
+                    ...student,
+                    gpa: Math.max(Math.min(student.gpa + getAll("gpa"), 10), 0),
+                    sat: Math.max(Math.min(student.sat + getAll("sat"), 10), 0),
+                    attitude: Math.max(
+                      Math.min(student.attitude + getAll("attitude"), 10),
+                      0
+                    ),
+                    morale: Math.max(
+                      Math.min(student.morale + (getAll("morale") ?? 0), 10),
+                      0
+                    ),
+                    hp: Math.min(student.hp + (getAll("hp") ?? 0), 10),
+                  };
+                else
+                  return {
+                    ...student,
+                    hp: 3,
+                    buffs: [
+                      ...student.buffs,
+                      { ...BuffList.recovery, grade: 3, month },
+                    ],
+                  };
               })
             );
           }}
