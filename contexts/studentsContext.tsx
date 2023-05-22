@@ -342,6 +342,19 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
       ]);
   }, [month]);
 
+  useEffect(() => {
+    if (localStorage.getItem("data")) {
+      const data = JSON.parse(localStorage.getItem("data")!);
+      setStudents(data.students);
+      setMonth(data.month);
+      setMessages(data.messages);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("data", JSON.stringify({ students, month, messages }));
+  }, [students, month, messages]);
+
   const reset = () => {
     setStudents(initialStudents);
     setEnding({ gpa: [], sat: [], specialist: [] });
