@@ -15,7 +15,8 @@ export default function BuffBadge({
       <div
         className={cc([
           "tooltip text-sm border-2 border-black px-1 py-0.5 text-white bg-black rounded md:block hidden",
-          buff.month + buff.duration < month && "!bg-opacity-50",
+          buff.month + buff.duration < month &&
+            "!bg-opacity-50 !border-transparent",
         ])}
         data-tip={buff.description
           .replace("%grade", `${buff.grade}`)
@@ -23,8 +24,14 @@ export default function BuffBadge({
       >
         {buff.name}
       </div>
-      <div className="md:hidden flex gap-2">
-        <div className="text-sm border-2 border-black px-1 py-0.5 text-white bg-black rounded whitespace-nowrap h-fit">
+      <div className="md:hidden flex flex-wrap gap-x-2">
+        <div
+          className={cc([
+            "text-sm w-fit text-center border-2 border-black px-1 py-0.5 text-white bg-black rounded h-fit",
+            buff.month + buff.duration < month &&
+              "!bg-opacity-50 !border-transparent",
+          ])}
+        >
           {buff.name}
         </div>
         <div className="pt-1 !leading-5 text-sm">

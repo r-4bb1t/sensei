@@ -80,7 +80,7 @@ export const BuffList = {
   },
   lowMorale: {
     name: "의욕 낮음",
-    description: "의욕이 낮아 공부 효율이 나지 않습니다.",
+    description: "%grade학년 %month월에 의욕이 낮아 공부 효율이 나지 않습니다.",
     effect: { sat: -1, gpa: -1 },
     duration: 0,
   },
