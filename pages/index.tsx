@@ -10,16 +10,16 @@ import {
 } from "react";
 import cc from "classcat";
 import { WindowProps, WindowType } from "@/constants/window";
-import StudentsList from "@/components/StudentList";
+import StudentsList from "@/components/Windows/StudentList";
 import CCTV from "@/components/CCTV";
-import Student from "@/components/Student";
+import Student from "@/components/Windows/Student";
 import { useStudentsContext } from "@/contexts/studentsContext";
 import Header from "@/components/Header";
-import Homework from "@/components/Homework";
-import Ending from "@/components/Ending";
+import Homework from "@/components/Windows/Homework";
+import Ending from "@/components/Windows/Ending";
 import Footer from "@/components/Footer";
-import MessageList from "@/components/MessageList";
-import Message from "@/components/Message";
+import MessageList from "@/components/Windows/MessageList";
+import Message from "@/components/Windows/Message";
 
 const Window = ({
   w,
@@ -51,28 +51,23 @@ const Window = ({
           : { scaleX: 0, scaleY: 0, transition: { duration: 0.1 } }
       }
       className={cc([
-        "window absolute overflow-visible",
+        "absolute overflow-visible border-2 border-black",
         w.type === WindowType.cctv && "w-[540px] h-[528px]",
-        w.type === WindowType.homework && "w-64",
+        w.type === WindowType.homework && "w-[300px]",
+        (w.type === WindowType.messagelist || w.type === WindowType.message) &&
+          "w-[300px] h-96",
         isDragging && "hidden",
       ])}
       style={{ top: w.top + "px", left: w.left + "px" }}
     >
-      <div className="flex h-full select-none flex-col">
+      <div className="flex h-full select-none flex-col pt-8 bg-white">
         <div
           className="absolute left-0 right-0 top-0 h-8 opacity-0"
           draggable
           ref={drag}
         ></div>
-        <div className="title-bar h-8 bg-none border-b-2 border-b-black !font-normal">
-          <button
-            aria-label="close"
-            className="close"
-            onClick={() =>
-              setWindows((ww) => ww.filter((www) => www.id !== w.id))
-            }
-          ></button>
-          <h1 className="title !text-base">
+        <div className="pointer-events-none font-bold absolute left-0 right-0 top-0 h-8 flex pl-4 justify-between items-center border-b-2 border-b-black">
+          <h1 className="!text-base">
             {
               {
                 [WindowType.student]: "학생 정보",
@@ -85,7 +80,14 @@ const Window = ({
               }[w.type]
             }
           </h1>
-          <button aria-label="resize" disabled className="hidden"></button>
+          <button
+            className="pointer-events-auto h-8 w-8 cursor-pointer border-l-2 border-l-black hover:bg-black hover:text-white"
+            onClick={() =>
+              setWindows((ww) => ww.filter((www) => www.id !== w.id))
+            }
+          >
+            ×
+          </button>
         </div>
 
         {w.type === WindowType.studentlist && <StudentsList w={w} />}
@@ -94,7 +96,7 @@ const Window = ({
         {w.type === WindowType.homework && <Homework />}
         {w.type === WindowType.ending && <Ending />}
         {w.type === WindowType.messagelist && <MessageList w={w} />}
-        {w.type === WindowType.message && <Message id={w.data?.id} />}
+        {w.type === WindowType.message && <Message id={w.data?.id ?? -1} />}
       </div>
     </motion.div>
   );
@@ -261,6 +263,31 @@ const Home: NextPage = () => {
           <img src="/assets/icons/message.png" className="w-12 h-12" />
           <div className="font-bold px-1 mt-2">메시지</div>
         </button>
+        {/* <button
+          className="hover:bg-[rgba(0,0,0,0.2)] w-16 h-20 flex flex-col items-center"
+          onClick={(e) => {
+            if (
+              windows.filter((w) => w.type === WindowType.messagelist).length ==
+              0
+            )
+              setWindows((windows) => [
+                ...windows,
+                {
+                  type: WindowType.messagelist,
+                  top: e.clientY,
+                  left: e.clientX + 20,
+                  id: new Date().toString() + Math.random().toString(),
+                },
+              ]);
+            else
+              setWindows((w) =>
+                w.filter((ww) => ww.type !== WindowType.messagelist)
+              );
+          }}
+        >
+          <img src="/assets/icons/collections.png" className="w-12 h-12" />
+          <div className="font-bold px-1 mt-2">갤러리</div>
+        </button> */}
       </main>
       <div
         className={cc([
@@ -284,7 +311,7 @@ const Home: NextPage = () => {
           )}
         </div>
       </div>
-      <div className="w-full h-screen md:hidden pt-24">
+      <div className="w-full h-screen md:hidden pt-32">
         {
           {
             [WindowType.student]: <Student />,
@@ -293,7 +320,7 @@ const Home: NextPage = () => {
             [WindowType.homework]: <Homework />,
             [WindowType.ending]: <Ending />,
             [WindowType.messagelist]: <MessageList w={undefined} />,
-            [WindowType.message]: <Message />,
+            [WindowType.message]: <Message id={-1} />,
           }[mobileTab]
         }
       </div>

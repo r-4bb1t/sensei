@@ -1,4 +1,9 @@
+import { AnimatePresence } from "framer-motion";
+import Sensei from "./Sensei";
+import { useStudentsContext } from "@/contexts/studentsContext";
+
 export default function Objects({ size }: { size: number }) {
+  const { loading } = useStudentsContext();
   return (
     <div className="absolute top-0 left-0 w-full gap-0 grid md:grid-cols-8 grid-cols-6">
       {[...Array(size * 2 + 2)].map((_, i) => (
@@ -12,8 +17,11 @@ export default function Objects({ size }: { size: number }) {
         className="w-full md:inline hidden"
       />
       <img src="/assets/items/windows_r.png" className="w-full" />
-      <img src="/assets/items/clock.png" className="w-full md:inline hidden" />
-      <img src="/assets/items/wall_something.png" className="w-full" />
+      <img src="/assets/items/clock.png" className="w-full" />
+      <img
+        src="/assets/items/wall_something.png"
+        className="w-full md:inline hidden"
+      />
       <img src="/assets/blank.png" className="w-full" />
 
       <img src="/assets/blank.png" className="w-full md:inline hidden" />
@@ -32,7 +40,13 @@ export default function Objects({ size }: { size: number }) {
       <img src="/assets/items/desk3.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full md:inline hidden" />
       <img src="/assets/items/lecturedesk_b.png" className="w-full" />
-      <img src="/assets/blank.png" className="w-full" />
+      <AnimatePresence>
+        {loading ? (
+          <Sensei />
+        ) : (
+          <img src="/assets/blank.png" className="w-full" />
+        )}
+      </AnimatePresence>
 
       <img src="/assets/blank.png" className="w-full md:inline hidden" />
       <img src="/assets/blank.png" className="w-full" />

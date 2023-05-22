@@ -1,8 +1,8 @@
 import { useStudentsContext } from "@/contexts/studentsContext";
-import Grade from "./Grade";
+import Grade from "../Grade";
 import { useEffect, useState } from "react";
 import cc from "classcat";
-import BuffBadge from "./BuffBadge";
+import BuffBadge from "../BuffBadge";
 
 export default function Student({ id = 1 }: { id?: number }) {
   const [rId, setRId] = useState(id);
@@ -24,7 +24,7 @@ export default function Student({ id = 1 }: { id?: number }) {
         </div>
         <button onClick={() => setRId((rId) => (rId % 9) + 1)}>{">"}</button>
       </div>
-      <div className="w-full flex justify-center h-24 mb-2">
+      <div className="w-full relative flex justify-center h-24 mb-2">
         <img src="/assets/items/desk1.png" className="w-24 absolute" />
         <img
           src={`/assets/students/${rId}.png`}
@@ -78,7 +78,7 @@ export default function Student({ id = 1 }: { id?: number }) {
         ))}
       </div>
 
-      <div className="mt-2 font-bold">역대 성적</div>
+      <div className="mt-2 font-bold">성적표</div>
       <table className="table grade-table collapse table-fixed text-center mx-2 mt-2">
         <tr>
           <th>3월 모의고사</th>

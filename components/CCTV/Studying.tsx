@@ -1,8 +1,7 @@
-import { useStudentsContext } from "@/contexts/studentsContext";
 import StudentItem from "./StudentItem";
+import { AnimatePresence } from "framer-motion";
 
 export default function Studying({ size }: { size: number }) {
-  const { students } = useStudentsContext();
   return (
     <div className="absolute top-0 left-0 w-full origin-bottom gap-0 grid grid-cols-6 md:grid-cols-8">
       {[...Array(size * 2 + 2)].map((_, i) => (
@@ -13,27 +12,45 @@ export default function Studying({ size }: { size: number }) {
       ))}
       <img src="/assets/blank.png" className="w-full md:inline hidden" />
       <img src="/assets/blank.png" className="w-full" />
-      <StudentItem id={7} />
-      <StudentItem id={4} />
-      <StudentItem id={1} />
+      <AnimatePresence>
+        <StudentItem id={7} />
+      </AnimatePresence>
+      <AnimatePresence>
+        <StudentItem id={4} />
+      </AnimatePresence>
+      <AnimatePresence>
+        <StudentItem id={1} />
+      </AnimatePresence>
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full md:inline hidden" />
 
       <img src="/assets/blank.png" className="w-full md:inline hidden" />
       <img src="/assets/blank.png" className="w-full" />
-      <StudentItem id={8} />
-      <StudentItem id={5} />
-      <StudentItem id={2} />
+      <AnimatePresence>
+        <StudentItem id={8} />
+      </AnimatePresence>
+      <AnimatePresence>
+        <StudentItem id={5} />
+      </AnimatePresence>
+      <AnimatePresence>
+        <StudentItem id={2} />
+      </AnimatePresence>
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full md:inline hidden" />
 
       <img src="/assets/blank.png" className="w-full md:inline hidden" />
       <img src="/assets/blank.png" className="w-full" />
-      <StudentItem id={9} />
-      <StudentItem id={6} />
-      <StudentItem id={3} />
+      <AnimatePresence>
+        <StudentItem id={9} />
+      </AnimatePresence>
+      <AnimatePresence>
+        <StudentItem id={6} />
+      </AnimatePresence>
+      <AnimatePresence>
+        <StudentItem id={3} />
+      </AnimatePresence>
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full" />
       <img src="/assets/blank.png" className="w-full md:inline hidden" />

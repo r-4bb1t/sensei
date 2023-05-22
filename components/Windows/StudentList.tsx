@@ -1,18 +1,21 @@
 import { WindowProps, WindowType } from "@/constants/window";
 import { useStudentsContext } from "@/contexts/studentsContext";
-import { Dispatch, SetStateAction } from "react";
-import BuffBadge from "./BuffBadge";
+import BuffBadge from "../BuffBadge";
+import { AnimatePresence, motion } from "framer-motion";
+import Student from "./Student";
+import { useState } from "react";
 
 export default function StudentList({ w }: { w?: WindowProps }) {
-  const { students, month, setWindows } = useStudentsContext();
+  const { students, month, setWindows, isMobile } = useStudentsContext();
+  const [selectedId, setSelectedId] = useState<number | null>(null);
   return (
     <>
-      <div className="md:window-pane pointer-events-none h-full break-all bg-white">
+      <div className="pointer-events-none h-full break-all bg-white w-[600px]">
         <table className="w-full">
           <thead className="border-b-2 border-b-black font-bold">
             <tr>
               <td className="md:w-12 w-8 text-center">번호</td>
-              <td className="w-16 text-center">사진</td>
+              <td className="md:w-16 w-8 text-center">사진</td>
               <td className="w-20 whitespace-nowrap">이름</td>
               <td className="md:table-cell hidden w-48">상태</td>
             </tr>
@@ -36,6 +39,7 @@ export default function StudentList({ w }: { w?: WindowProps }) {
                         },
                       },
                     ]);
+                  if (isMobile) setSelectedId(i + 1);
                 }}
                 key={i}
               >
@@ -64,6 +68,26 @@ export default function StudentList({ w }: { w?: WindowProps }) {
           </tbody>
         </table>
       </div>
+      <AnimatePresence>
+        {selectedId && (
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0, transition: { duration: 0.2 } }}
+            className="w-full h-full fixed inset-0"
+          >
+            <div className="w-full h-full pt-32 pb-48 bg-white overflow-y-auto flex flex-col items-center">
+              <Student id={selectedId} />
+              <button
+                onClick={() => setSelectedId(null)}
+                className="fixed bottom-32 text-lg bg-white px-4 py-1 hover:bg-black hover:text-white border-black border-2"
+              >
+                닫기
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

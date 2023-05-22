@@ -1,3 +1,5 @@
+import { BuffList } from "./types";
+
 export const initialStudents = [
   {
     index: 1,
@@ -5,7 +7,7 @@ export const initialStudents = [
     gpa: 6,
     sat: 7,
     attitude: 8,
-    hp: 10,
+    hp: 4,
     morale: 3,
     buffs: [],
     grade: [],
@@ -29,7 +31,7 @@ export const initialStudents = [
     gpa: 1,
     sat: 7,
     attitude: 5,
-    hp: 10,
+    hp: 2,
     morale: 3,
     buffs: [],
     grade: [],
@@ -62,7 +64,7 @@ export const initialStudents = [
   {
     index: 6,
     name: "송상화",
-    gpa: 7,
+    gpa: 4,
     sat: 5,
     attitude: 6,
     hp: 10,
@@ -74,10 +76,10 @@ export const initialStudents = [
   {
     index: 7,
     name: "양제현",
-    gpa: 7,
+    gpa: 3,
     sat: 1,
     attitude: 5,
-    hp: 10,
+    hp: 8,
     morale: 7,
     buffs: [],
     grade: [],
@@ -101,7 +103,7 @@ export const initialStudents = [
     gpa: 7,
     sat: 7,
     attitude: 1,
-    hp: 10,
+    hp: 6,
     morale: 10,
     buffs: [],
     grade: [],

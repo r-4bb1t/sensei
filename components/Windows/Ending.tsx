@@ -3,7 +3,7 @@ import { useStudentsContext } from "@/contexts/studentsContext";
 export default function Ending() {
   const { ending, students, reset } = useStudentsContext();
   return (
-    <div className="w-full">
+    <div className="w-full h-full flex flex-col justify-between items-center pb-12">
       <div className="w-full flex flex-col items-center px-4 py-4 border-b-2 border-b-black border-dashed">
         <img src="/assets/logo.png" className="w-12 h-12" />
         <div>202N학년도 KUCC고등학교 입시결과</div>
@@ -34,7 +34,7 @@ export default function Ending() {
               >
                 <img
                   src={`/assets/students/front_${id}.png`}
-                  className="w-6 h-6"
+                  className="w-12 h-12"
                 />
               </div>
             ))}
@@ -49,7 +49,7 @@ export default function Ending() {
               >
                 <img
                   src={`/assets/students/front_${id}.png`}
-                  className="w-6 h-6"
+                  className="w-12 h-12"
                 />
               </div>
             ))}
@@ -64,20 +64,32 @@ export default function Ending() {
               >
                 <img
                   src={`/assets/students/front_${id}.png`}
-                  className="w-6 h-6"
+                  className="w-12 h-12"
                 />
               </div>
             ))}
           </div>
         </div>
-
-        <button
-          className="mt-4 px-4 py-1 hover:bg-black hover:text-white border-black border-2"
-          onClick={() => reset()}
-        >
-          다시하기
-        </button>
+        <div className="text-lg md:text-base mt-4">
+          총{" "}
+          {
+            [...ending.gpa, ...ending.sat, ...ending.specialist].filter(
+              (e, i) =>
+                [...ending.gpa, ...ending.sat, ...ending.specialist].indexOf(
+                  e
+                ) === i
+            ).length
+          }
+          명의 학생이 합격하였습니다.
+        </div>
       </div>
+
+      <button
+        className="mt-4 px-4 py-1 hover:bg-black hover:text-white border-black border-2"
+        onClick={() => reset()}
+      >
+        다시하기
+      </button>
     </div>
   );
 }

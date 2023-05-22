@@ -25,8 +25,13 @@ export default function StudentItem({ id }: { id: number }) {
     );
   }, [month]);
 
-  return student.hp > 0 ? (
-    <div className="relative flex justify-center">
+  return student.hp > 0 && month !== 8 && month !== 13 ? (
+    <motion.div
+      className="relative flex justify-center"
+      initial={{ scaleY: 0 }}
+      animate={{ scaleY: 1 }}
+      exit={{ scaleY: 0, transition: { duration: 0.2 } }}
+    >
       <div className="absolute -top-6">
         <AnimatePresence>
           {message && (
@@ -34,7 +39,7 @@ export default function StudentItem({ id }: { id: number }) {
               initial={{ y: 5, scale: 0 }}
               animate={{ y: 0, scale: 1 }}
               exit={{ y: -5, scale: 0 }}
-              className="w-fit px-1 py-0.5 rounded border-2 border-black bg-white text-xs whitespace-nowrap"
+              className="w-fit px-1 py-0.5 rounded border-2 border-black bg-white text-xs whitespace-nowrap origin-bottom"
             >
               {message}
             </motion.div>
@@ -68,7 +73,7 @@ export default function StudentItem({ id }: { id: number }) {
           </div>
         </button>
       </div>
-    </div>
+    </motion.div>
   ) : (
     <img src="/assets/items/absent.png" className="w-full" />
   );

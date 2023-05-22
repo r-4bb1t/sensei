@@ -1,6 +1,9 @@
-import { BuffList, Student } from "@/constants/types";
+import Ending from "@/components/Windows/Ending";
+import { BuffList, MESSAGE, MessageType, Student } from "@/constants/types";
 import { initialStudents } from "@/constants/values";
 import { WindowProps, WindowType } from "@/constants/window";
+import { getRandomPhoneMessage } from "@/utils/getRandomMessage";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Dispatch,
   ReactNode,
@@ -10,6 +13,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { useAlert } from "./alertsContext";
 
 interface StudentsContextProps {
   students: Student[];
@@ -26,6 +30,11 @@ interface StudentsContextProps {
   mobileTab: WindowType;
   setMobileTab: Dispatch<SetStateAction<WindowType>>;
   isMobile: boolean;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  messages: MessageType[];
+  setMessages: Dispatch<SetStateAction<MessageType[]>>;
+  addMessage: (index: number, messages: string[]) => void;
 }
 
 const StudentsContext = createContext<StudentsContextProps>({
@@ -41,6 +50,11 @@ const StudentsContext = createContext<StudentsContextProps>({
   mobileTab: WindowType.cctv,
   setMobileTab: () => {},
   isMobile: false,
+  loading: false,
+  setLoading: () => {},
+  messages: [],
+  setMessages: () => {},
+  addMessage: () => {},
 });
 
 const getGrade = (num: number) => {
@@ -95,6 +109,7 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
   const [windows, setWindows] = useState<WindowProps[]>([]);
   const [mobileTab, setMobileTab] = useState<WindowType>(WindowType.cctv);
   const [isMobile, setIsMobile] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [month, setMonth] = useState(3);
   const [ending, setEnding] = useState<{
@@ -103,6 +118,9 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
     specialist: number[];
   }>({ gpa: [], sat: [], specialist: [] });
   const [students, setStudents] = useState<Student[]>(initialStudents);
+  const [messages, setMessages] = useState<MessageType[]>([]);
+
+  const { push } = useAlert();
 
   useEffect(() => {
     setIsMobile(window.matchMedia("(max-width: 768px)").matches);
@@ -110,7 +128,37 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
       setIsMobile(window.matchMedia("(max-width: 768px)").matches);
     });
   }, []);
+
+  const addMessage = (studentId: number, newMessages: string[]) => {
+    const Promises = newMessages.map(
+      (message) =>
+        new Promise<void>((resolve, rej) => {
+          setTimeout(() => {
+            push({ studentId, name: students[studentId - 1].name, message });
+            setMessages((messages) => [
+              ...messages,
+              { student: studentId, message },
+            ]);
+            resolve();
+          }, Math.random() * 1000 + 50);
+        })
+    );
+    Promise.all(Promises);
+  };
+
   useEffect(() => {
+    setStudents((students) =>
+      students.map((student) => {
+        return {
+          ...student,
+          buffs:
+            student.morale < 5
+              ? [...student.buffs, { ...BuffList.lowMorale, month, grade: 3 }]
+              : student.buffs,
+        };
+      })
+    );
+
     if (month == 4 || month == 6 || month == 10) {
       setStudents((students) =>
         students.map((student) => {
@@ -211,6 +259,26 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
     setWindows([]);
   };
 
+  useEffect(() => {
+    if (loading) {
+      setTimeout(
+        () => {
+          setLoading(false);
+          setMonth((month) => month + 1);
+        },
+        process.env.NODE_ENV === "development" ? 1000 : 5000
+      );
+
+      students.forEach((student) => {
+        if (student.hp == 0)
+          addMessage(
+            student.index,
+            getRandomPhoneMessage(student, MESSAGE.retire)
+          );
+      });
+    }
+  }, [loading]);
+
   return (
     <StudentsContext.Provider
       value={{
@@ -226,9 +294,26 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
         mobileTab,
         setMobileTab,
         isMobile,
+        loading,
+        setLoading,
+        messages,
+        setMessages,
+        addMessage,
       }}
     >
       {children}
+      <AnimatePresence>
+        {month == 13 && (
+          <motion.div
+            className="fixed w-full h-full inset-0 bg-white md:hidden"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0, transition: { duration: 0.2 } }}
+          >
+            <Ending />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </StudentsContext.Provider>
   );
 };

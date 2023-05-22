@@ -78,6 +78,12 @@ export const BuffList = {
     effect: { morale: -1 },
     duration: 2,
   },
+  lowMorale: {
+    name: "의욕 낮음",
+    description: "의욕이 낮아 공부 효율이 나지 않습니다.",
+    effect: { sat: -1, gpa: -1 },
+    duration: 0,
+  },
 };
 
 export const monthDescription = [
@@ -139,7 +145,7 @@ export const homework = <HomeworkType[]>[
     name: "선생님의 족집게 특별과제",
     description:
       "내신의 모든 것을 알려준다! 시험기간에 과제를 해결한다면 내신쯤이야 식은 죽 먹기!",
-    stat: { gpa: 1, hp: -1 },
+    stat: { gpa: 1, hp: -2 },
     month: {
       4: { gpa: 2, hp: 2 },
       6: { gpa: 2, hp: 2 },
@@ -165,7 +171,7 @@ export const homework = <HomeworkType[]>[
     name: "학생들을 위한 수능특강 해설",
     description:
       "모의고사를 잘본 친구들은 더 잘 알아듣겠지? 수능이 얼마 안남았다면 더 열심히 해라!",
-    stat: { sat: 1, hp: -1 },
+    stat: { sat: 1, hp: -2 },
     month: {
       11: { sat: 2 },
     },
@@ -191,3 +197,17 @@ export const homework = <HomeworkType[]>[
     },
   },
 ];
+
+export enum MESSAGE {
+  retire,
+  goodMockExam,
+  goodSchoolExam,
+  badMockExam,
+  badSchoolExam,
+  lowMorale,
+}
+
+export interface MessageType {
+  student: number;
+  message: string;
+}

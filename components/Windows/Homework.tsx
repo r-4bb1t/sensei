@@ -3,24 +3,30 @@ import Student from "./Student";
 import { useEffect, useRef, useState } from "react";
 import cc from "classcat";
 import { BuffList, homework } from "@/constants/types";
-import BuffBadge from "./BuffBadge";
+import BuffBadge from "../BuffBadge";
 
 export default function Homework() {
   const [selected, setSelected] = useState(1);
-  const { students, setStudents, month, setMonth } = useStudentsContext();
+  const { students, setStudents, month, loading, setLoading, addMessage } =
+    useStudentsContext();
   const [selectedHw, setSelectedHw] = useState(students[0].lastHomework);
   const [homeworks, setHomeworks] = useState(
     students.map((student) => homework[student.lastHomework])
   );
   const selectRef = useRef<HTMLSelectElement>(null);
 
-  const getAll = (key: "gpa" | "sat" | "attitude" | "morale" | "hp") => {
+  const getAll = (
+    index: number,
+    key: "gpa" | "sat" | "attitude" | "morale" | "hp"
+  ) => {
+    let val =
+      (homeworks[index].stat[key] ?? 0) *
+      (homeworks[index].month[month]
+        ? homeworks[index].month[month][key] ?? 1
+        : 1);
     return (
-      (homework[selectedHw].stat[key] ?? 0) *
-        (homework[selectedHw].month[month]
-          ? homework[selectedHw].month[month][key] ?? 1
-          : 1) +
-      students[selected - 1].buffs.reduce((r, buff) => {
+      val +
+      students[index].buffs.reduce((r, buff) => {
         return (
           r + (buff.duration + buff.month > month ? buff.effect[key] ?? 0 : 0)
         );
@@ -44,7 +50,7 @@ export default function Homework() {
             className={cc([
               "hover:bg-[rgba(0,0,0,0.2)] p-1 border-2 border-transparent",
               selected == i + 1 && "!border-black",
-              students[selected - 1].hp == 0 && "opacity-25",
+              students[i].hp == 0 && "opacity-25",
             ])}
             key={i}
             onClick={() => setSelected(i + 1)}
@@ -60,18 +66,25 @@ export default function Homework() {
         {students[selected - 1].name} 학생의 {month}월 숙제
       </div>
       <div className="relative">
-        {students[selected - 1].hp == 0 && (
+        {loading ? (
           <div className="w-full h-full absolute flex items-center justify-center text-lg font-bold">
-            병결
+            <div className="animate-bounce">숙제 중...</div>
           </div>
+        ) : (
+          students[selected - 1].hp == 0 && (
+            <div className="w-full h-full absolute flex items-center justify-center text-lg font-bold">
+              병결
+            </div>
+          )
         )}
         <div
           className={cc([
-            students[selected - 1].hp == 0 && "opacity-25 pointer-events-none",
+            (students[selected - 1].hp == 0 || loading) &&
+              "opacity-25 pointer-events-none",
           ])}
         >
           <select
-            className="w-full px-2 font-bold mt-2"
+            className="w-full px-2 font-bold mt-2 border-2 border-black py-1"
             ref={selectRef}
             onChange={(e) =>
               setHomeworks((homeworks) =>
@@ -101,8 +114,8 @@ export default function Homework() {
               <div
                 className={cc([
                   "text-right",
-                  getAll("gpa") > 0 && "text-green-600 font-bold",
-                  getAll("gpa") < 0 && "text-red-600 font-bold",
+                  getAll(selected - 1, "gpa") > 0 && "text-green-600 font-bold",
+                  getAll(selected - 1, "gpa") < 0 && "text-red-600 font-bold",
                 ])}
               >
                 내신
@@ -115,11 +128,13 @@ export default function Homework() {
                 <div
                   className={cc([
                     "h-full bg-yellow-400 opacity-50",
-                    getAll("gpa") < 0 &&
+                    getAll(selected - 1, "gpa") < 0 &&
                       "!bg-red-700 -translate-x-full absolute",
                   ])}
                   style={{
-                    width: `${Math.abs(getAll("gpa") ?? 0) * 10}%`,
+                    width: `${
+                      Math.abs(getAll(selected - 1, "gpa") ?? 0) * 10
+                    }%`,
                     left: `${students[selected - 1].gpa * 10}%`,
                   }}
                 ></div>
@@ -127,8 +142,8 @@ export default function Homework() {
               <div
                 className={cc([
                   "text-right",
-                  getAll("sat") > 0 && "text-green-600 font-bold",
-                  getAll("sat") < 0 && "text-red-600 font-bold",
+                  getAll(selected - 1, "sat") > 0 && "text-green-600 font-bold",
+                  getAll(selected - 1, "sat") < 0 && "text-red-600 font-bold",
                 ])}
               >
                 모평
@@ -141,11 +156,11 @@ export default function Homework() {
                 <div
                   className={cc([
                     "h-full bg-green-400 opacity-50",
-                    getAll("sat") < 0 &&
+                    getAll(selected - 1, "sat") < 0 &&
                       "!bg-red-700 -translate-x-full absolute",
                   ])}
                   style={{
-                    width: `${Math.abs(getAll("sat")) * 10}%`,
+                    width: `${Math.abs(getAll(selected - 1, "sat")) * 10}%`,
                     left: `${students[selected - 1].sat * 10}%`,
                   }}
                 ></div>
@@ -153,8 +168,10 @@ export default function Homework() {
               <div
                 className={cc([
                   "text-right",
-                  getAll("attitude") > 0 && "text-green-600 font-bold",
-                  getAll("attitude") < 0 && "text-red-600 font-bold",
+                  getAll(selected - 1, "attitude") > 0 &&
+                    "text-green-600 font-bold",
+                  getAll(selected - 1, "attitude") < 0 &&
+                    "text-red-600 font-bold",
                 ])}
               >
                 태도
@@ -167,11 +184,13 @@ export default function Homework() {
                 <div
                   className={cc([
                     "h-full bg-blue-400 opacity-50",
-                    getAll("attitude") < 0 &&
+                    getAll(selected - 1, "attitude") < 0 &&
                       "!bg-red-700 -translate-x-full absolute",
                   ])}
                   style={{
-                    width: `${Math.abs(getAll("attitude") * 10)}%`,
+                    width: `${Math.abs(
+                      getAll(selected - 1, "attitude") * 10
+                    )}%`,
                     left: `${students[selected - 1].attitude * 10}%`,
                   }}
                 ></div>
@@ -180,8 +199,10 @@ export default function Homework() {
               <div
                 className={cc([
                   "text-right",
-                  getAll("morale") > 0 && "text-green-600 font-bold",
-                  getAll("morale") < 0 && "text-red-600 font-bold",
+                  getAll(selected - 1, "morale") > 0 &&
+                    "text-green-600 font-bold",
+                  getAll(selected - 1, "morale") < 0 &&
+                    "text-red-600 font-bold",
                 ])}
               >
                 의욕
@@ -194,11 +215,11 @@ export default function Homework() {
                 <div
                   className={cc([
                     "h-full bg-zinc-400 opacity-50",
-                    getAll("morale") < 0 &&
+                    getAll(selected - 1, "morale") < 0 &&
                       "!bg-red-700 -translate-x-full absolute",
                   ])}
                   style={{
-                    width: `${Math.abs(getAll("morale")) * 10}%`,
+                    width: `${Math.abs(getAll(selected - 1, "morale")) * 10}%`,
                     left: `${students[selected - 1].morale * 10}%`,
                   }}
                 ></div>
@@ -206,8 +227,8 @@ export default function Homework() {
               <div
                 className={cc([
                   "text-right",
-                  getAll("hp") > 0 && "text-green-600 font-bold",
-                  getAll("hp") < 0 && "text-red-600 font-bold",
+                  getAll(selected - 1, "hp") > 0 && "text-green-600 font-bold",
+                  getAll(selected - 1, "hp") < 0 && "text-red-600 font-bold",
                 ])}
               >
                 체력
@@ -220,11 +241,11 @@ export default function Homework() {
                 <div
                   className={cc([
                     "h-full bg-red-400 opacity-50",
-                    getAll("hp") < 0 &&
+                    getAll(selected - 1, "hp") < 0 &&
                       "!bg-red-700 absolute -translate-x-full",
                   ])}
                   style={{
-                    width: `${Math.abs(getAll("hp")) * 10}%`,
+                    width: `${Math.abs(getAll(selected - 1, "hp")) * 10}%`,
                     left: `${students[selected - 1].hp * 10}%`,
                   }}
                 ></div>
@@ -242,25 +263,35 @@ export default function Homework() {
       </div>
       <div className="mt-2 flex justify-center">
         <button
-          className="px-4 py-1 hover:bg-black hover:text-white border-black border-2"
+          className="px-4 py-1 hover:bg-black hover:text-white border-black border-2 disabled:bg-black-500 disabled:border-black-500 disabled:text-white"
+          disabled={loading}
           onClick={() => {
-            setMonth((month) => month + 1);
+            setLoading(true);
             setStudents((students) =>
               students.map((student, i) => {
                 if (student.hp > 0)
                   return {
                     ...student,
-                    gpa: Math.max(Math.min(student.gpa + getAll("gpa"), 10), 0),
-                    sat: Math.max(Math.min(student.sat + getAll("sat"), 10), 0),
+                    gpa: Math.max(
+                      Math.min(student.gpa + getAll(i, "gpa"), 10),
+                      0
+                    ),
+                    sat: Math.max(
+                      Math.min(student.sat + getAll(i, "sat"), 10),
+                      0
+                    ),
                     attitude: Math.max(
-                      Math.min(student.attitude + getAll("attitude"), 10),
+                      Math.min(student.attitude + getAll(i, "attitude"), 10),
                       0
                     ),
                     morale: Math.max(
-                      Math.min(student.morale + (getAll("morale") ?? 0), 10),
+                      Math.min(student.morale + (getAll(i, "morale") ?? 0), 10),
                       0
                     ),
-                    hp: Math.min(student.hp + (getAll("hp") ?? 0), 10),
+                    hp: Math.max(
+                      Math.min(student.hp + (getAll(i, "hp") ?? 0), 10),
+                      0
+                    ),
                   };
                 else
                   return {

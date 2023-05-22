@@ -5,7 +5,7 @@ import Studying from "./Studying";
 import { useEffect, useState } from "react";
 
 export default function CCTV() {
-  const { month, isMobile } = useStudentsContext();
+  const { isMobile } = useStudentsContext();
   const [size, setSize] = useState(3);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function CCTV() {
 
   return (
     <>
-      <div className="relative md:window-pane pointer-events-none h-full break-all !p-0 bg-black-800">
+      <div className="relative pointer-events-none h-full break-all !p-0 bg-black-800">
         <div className="w-full md:h-auto h-full flex items-center pb-[40%] md:pb-0 justify-center md:block">
           <div
             className="relative max-w-full md:scale-100 scale-[1.4]"
@@ -23,7 +23,7 @@ export default function CCTV() {
           >
             <Background size={size} />
             <Objects size={size} />
-            {month !== 8 && month !== 13 && <Studying size={size} />}
+            <Studying size={size} />
           </div>
           <div className="w-full h-full absolute inset-0 pointer-events-none">
             <img
