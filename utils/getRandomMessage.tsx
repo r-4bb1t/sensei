@@ -59,6 +59,7 @@ export const getRandomPhoneMessage = (student: Student, type: MESSAGE) => {
         random.push(["몸이 안 좋아서 등교 못 합니다."]);
       } else {
         random.push(["학교 안가요"]);
+        random.push(["저 쓰러짐"]);
         random.push(["이건 학대예요."]);
       }
       break;

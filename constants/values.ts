@@ -12,6 +12,7 @@ export const initialStudents = [
     buffs: [],
     grade: [],
     lastHomework: 0,
+    ending: "",
   },
   {
     index: 2,
@@ -24,6 +25,7 @@ export const initialStudents = [
     buffs: [],
     grade: [],
     lastHomework: 0,
+    ending: "",
   },
   {
     index: 3,
@@ -36,6 +38,7 @@ export const initialStudents = [
     buffs: [],
     grade: [],
     lastHomework: 0,
+    ending: "",
   },
   {
     index: 4,
@@ -48,6 +51,7 @@ export const initialStudents = [
     buffs: [],
     grade: [],
     lastHomework: 0,
+    ending: "",
   },
   {
     index: 5,
@@ -60,6 +64,7 @@ export const initialStudents = [
     buffs: [],
     grade: [],
     lastHomework: 0,
+    ending: "",
   },
   {
     index: 6,
@@ -72,6 +77,7 @@ export const initialStudents = [
     buffs: [],
     grade: [],
     lastHomework: 0,
+    ending: "",
   },
   {
     index: 7,
@@ -84,6 +90,7 @@ export const initialStudents = [
     buffs: [],
     grade: [],
     lastHomework: 0,
+    ending: "",
   },
   {
     index: 8,
@@ -96,6 +103,7 @@ export const initialStudents = [
     buffs: [],
     grade: [],
     lastHomework: 0,
+    ending: "",
   },
   {
     index: 9,
@@ -108,6 +116,7 @@ export const initialStudents = [
     buffs: [],
     grade: [],
     lastHomework: 0,
+    ending: "",
   },
 ];
 
@@ -233,7 +242,7 @@ export const BuffList = {
   },
   lowMorale: {
     name: "의욕 낮음",
-    description: "%grade학년 %month월에 의욕이 낮아 공부 효율이 나지 않습니다.",
+    description: "의욕이 낮아 성적이 떨어집니다.",
     effect: { sat: -1, gpa: -1 },
     duration: 0,
     isGood: false,

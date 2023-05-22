@@ -130,6 +130,75 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
     });
   }, []);
 
+  const getEnding = (students: Student[]) => {
+    let gpa = [] as number[],
+      sat = [] as number[],
+      specialist = [] as number[];
+    let ending = new Array(students.length).map(() => "");
+    students.forEach((student) => {
+      if (student.attitude > 5) {
+        ending[student.index - 1] =
+          "대학에 합격하지 않았지만, 대학이 인생의 전부는 아니라는 것을 알고 있습니다.";
+        addMessage(student.index, ["선생님 그동안 감사했습니다!"]);
+      } else {
+        ending[student.index - 1] = "앞으로 멋대로 살 계획입니다. 뭐 어때요!";
+        addMessage(student.index, [
+          "드디어 졸업이다!",
+          "난 어른이니 이제 내 맘대로 살래요.",
+        ]);
+      }
+      if (student.grade[5] == "A" || student.grade[5] == "A+") {
+        sat.push(student.index);
+        if (student.attitude > 4) {
+          ending[student.index - 1] =
+            "우수한 수능 성적으로 원하는 대학에 합격했습니다.";
+          addMessage(student.index, [
+            "정시 합격했습니다ㅠㅠ 그간 감사했습니다.",
+          ]);
+        } else {
+          ending[student.index - 1] =
+            "우수한 수능 성적으로 원하는 대학에 합격했지만, 대학이 인생의 전부일까요?";
+          addMessage(student.index, ["저 정시 합격했습니다."]);
+        }
+      }
+      if (student.gpa >= 5 && student.attitude >= 8) {
+        specialist.push(student.index);
+        ending[student.index - 1] =
+          "내신 성적이 매우 뛰어나지는 않았지만, 특기자 전형으로 원하는 대학에 합격했습니다.";
+        addMessage(student.index, [
+          `저 특기자 전형${
+            student.grade[5] == "A" || student.grade[5] == "A+" ? "도" : ""
+          } 합격했어요!ㅜㅜㅜㅜㅜ`,
+        ]);
+      }
+      if (student.gpa >= 8) {
+        if (student.attitude >= 6) {
+          gpa.push(student.index);
+          ending[student.index - 1] =
+            "높은 내신 성적과 좋은 생기부로 원하는 대학에 합격했습니다.";
+          addMessage(student.index, [
+            `저 수시${
+              student.grade[5] == "A" ||
+              student.grade[5] == "A+" ||
+              (student.gpa >= 5 && student.attitude >= 8)
+                ? "도"
+                : ""
+            } 합격했습니다. 선생님 감사합니다.`,
+          ]);
+        } else
+          ending[student.index - 1] =
+            "내신 성적은 높았지만, 미비한 생기부로 인해 수시 전형에는 합격하지 못했습니다.";
+      }
+    });
+
+    setEnding({ gpa, sat, specialist });
+    setStudents((students) =>
+      students.map((student, i) => {
+        return { ...student, ending: ending[i] };
+      })
+    );
+  };
+
   const addMessage = (studentId: number, newMessages: string[]) => {
     const Promises = newMessages.map(
       (message) =>
@@ -256,19 +325,7 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
 
       setMobileTab(WindowType.studentlist);
 
-      setEnding({
-        gpa: students
-          .filter((student) => student.gpa >= 8 && student.attitude >= 6)
-          .map((student) => student.index),
-        sat: students
-          .filter(
-            (student) => student.grade[5] == "A" || student.grade[5] == "A+"
-          )
-          .map((student) => student.index),
-        specialist: students
-          .filter((student) => student.gpa >= 5 && student.attitude >= 8)
-          .map((student) => student.index),
-      });
+      getEnding(students);
     } else if (
       windows.filter((w) => w.type === WindowType.homework).length == 0
     )

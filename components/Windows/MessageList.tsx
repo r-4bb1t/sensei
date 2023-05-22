@@ -39,7 +39,7 @@ export default function MessageList({ w }: { w?: WindowProps }) {
                       },
                     ]);
                   if (isMobile) {
-                    setSelectedMessage(i);
+                    setSelectedMessage(message.student);
                   }
                 }}
               >

@@ -70,7 +70,7 @@ export default function Ending() {
             ))}
           </div>
         </div>
-        <div className="text-lg md:text-base mt-4">
+        <div className="text-lg md:text-base mt-4 text-center">
           총{" "}
           {
             [...ending.gpa, ...ending.sat, ...ending.specialist].filter(
@@ -81,6 +81,8 @@ export default function Ending() {
             ).length
           }
           명의 학생이 합격하였습니다.
+          <br />
+          자세한 내용은 출석부에서 확인하세요.
         </div>
       </div>
 

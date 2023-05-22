@@ -4,7 +4,8 @@ import cc from "classcat";
 import { useEffect, useState } from "react";
 
 export default function Footer() {
-  const { mobileTab, setMobileTab, loading, messages } = useStudentsContext();
+  const { mobileTab, setMobileTab, loading, messages, month } =
+    useStudentsContext();
   const [unread, setUnread] = useState(false);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function Footer() {
         onClick={() => setMobileTab(WindowType.homework)}
       >
         <img src="/assets/icons/homework.png" className="w-12 h-12" />
-        {!loading && (
+        {!loading && month < 13 && (
           <div className="absolute w-6 h-6 text-white top-1 right-4 border-2 border-black bg-red-500 rounded-full flex items-center justify-center text-sm font-black">
             N
           </div>

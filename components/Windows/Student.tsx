@@ -120,10 +120,27 @@ export default function Student({ id = 1 }: { id?: number }) {
 
       {month == 13 && (
         <>
-          <div className="mt-4 font-bold">엔딩</div>
-          {ending.gpa.includes(id) && <div>수시 합격</div>}
-          {ending.sat.includes(id) && <div>정시 합격</div>}
-          {ending.specialist.includes(id) && <div>특기자 합격</div>}
+          <div className="mt-4 font-bold mb-2">엔딩</div>
+          <div className="flex items-center gap-2">
+            {ending.gpa.includes(id) && (
+              <div className="px-2 py-1 rounded bg-black text-white">
+                수시 합격
+              </div>
+            )}
+            {ending.sat.includes(id) && (
+              <div className="px-2 py-1 rounded bg-black text-white">
+                정시 합격
+              </div>
+            )}
+            {ending.specialist.includes(id) && (
+              <div className="px-2 py-1 rounded bg-black text-white">
+                특기자 합격
+              </div>
+            )}
+          </div>
+          <div className="mt-2 px-4 text-center">
+            {student.name} 학생은 {student.ending}
+          </div>
         </>
       )}
     </div>

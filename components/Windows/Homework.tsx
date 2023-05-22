@@ -324,8 +324,10 @@ export default function Homework() {
       </div>
     </>
   ) : (
-    <div className="w-full md:h-12 h-full flex items-center justify-center">
+    <div className="w-full md:h-12 h-full flex items-center justify-center text-center pb-32">
       학생들의 졸업을 축하합니다!
+      <br />
+      이제 숙제는 없어요.
     </div>
   );
 }

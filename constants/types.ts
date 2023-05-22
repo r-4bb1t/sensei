@@ -13,6 +13,7 @@ export interface Student {
   lastHomework: number;
 
   grade: string[];
+  ending: string;
 }
 
 export interface Buff {
