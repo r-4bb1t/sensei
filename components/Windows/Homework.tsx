@@ -270,9 +270,9 @@ export default function Homework() {
             </div>
           </div>
         </div>
-        <div className="mt-2 flex justify-center">
+        <div className="mt-4 flex justify-center">
           <button
-            className="px-4 py-1 hover:bg-black hover:text-white border-black border-2 disabled:bg-black-500 disabled:border-black-500 disabled:text-white"
+            className="px-4 py-1 text-lg hover:bg-black hover:text-white border-black border-2 disabled:bg-black-500 disabled:border-black-500 disabled:text-white"
             disabled={loading}
             onClick={() => {
               setLoading(true);
@@ -318,7 +318,7 @@ export default function Homework() {
               );
             }}
           >
-            확정
+            이번 달 숙제 확정
           </button>
         </div>
       </div>

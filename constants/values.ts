@@ -152,7 +152,7 @@ export const homework = <HomeworkType[]>[
     name: "학생들을 위한 수능특강 해설",
     description:
       "모의고사를 잘본 친구들은 더 잘 알아듣겠지? 수능이 얼마 안남았다면 더 열심히 해라!",
-    stat: { sat: 1, hp: -2 },
+    stat: { sat: 2, hp: -2 },
     month: {
       11: { sat: 2 },
     },
