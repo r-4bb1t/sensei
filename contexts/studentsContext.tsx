@@ -142,10 +142,12 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
         addMessage(student.index, ["선생님 그동안 감사했습니다!"]);
       } else {
         ending[student.index - 1] = "앞으로 멋대로 살 계획입니다. 뭐 어때요!";
-        addMessage(student.index, [
-          "드디어 졸업이다!",
-          "난 어른이니 이제 내 맘대로 살래요.",
-        ]);
+        if (!(student.grade[5] == "A" || student.grade[5] == "A+")) {
+          addMessage(student.index, [
+            "드디어 졸업이다!",
+            "난 어른이니 이제 내 맘대로 살래요.",
+          ]);
+        }
       }
       if (student.grade[5] == "A" || student.grade[5] == "A+") {
         sat.push(student.index);
@@ -289,12 +291,12 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
         if (bn === BuffList.goodMockExam.name)
           addMessage(
             student.index,
-            getRandomPhoneMessage(student, MESSAGE.goodMockExam)
+            getRandomPhoneMessage(student, MESSAGE.goodMockExam, month === 12)
           );
         else if (bn === BuffList.badMockExam.name)
           addMessage(
             student.index,
-            getRandomPhoneMessage(student, MESSAGE.badMockExam)
+            getRandomPhoneMessage(student, MESSAGE.badMockExam, month === 12)
           );
         return g;
       });
