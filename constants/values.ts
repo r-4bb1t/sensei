@@ -128,10 +128,10 @@ export const homework = <HomeworkType[]>[
       "내신의 모든 것을 알려준다! 시험기간에 과제를 해결한다면 내신쯤이야 식은 죽 먹기!",
     stat: { gpa: 1, hp: -2 },
     month: {
-      4: { gpa: 2, hp: 2 },
-      6: { gpa: 2, hp: 2 },
+      4: { gpa: 2 },
+      6: { gpa: 2 },
       8: { gpa: 2, hp: 0 },
-      10: { gpa: 1, hp: 2 },
+      10: { gpa: 1 },
     },
   },
   {
