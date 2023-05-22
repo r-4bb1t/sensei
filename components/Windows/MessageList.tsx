@@ -10,10 +10,14 @@ export default function MessageList({ w }: { w?: WindowProps }) {
 
   return (
     <>
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col h-full overflow-y-auto">
         {messages.length > 0 ? (
           messages
-            .filter((message, i) => messages.lastIndexOf(message) === i)
+            .filter(
+              (message, i) =>
+                messages.findLastIndex((m) => message.student === m.student) ===
+                i
+            )
             .reverse()
             .map((message, i) => (
               <div

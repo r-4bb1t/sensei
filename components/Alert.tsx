@@ -12,7 +12,7 @@ export function Alert({ close, studentId, name, message }: IAlertProps) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       close();
-    }, 1000);
+    }, 1500);
 
     return () => {
       clearTimeout(timeout);

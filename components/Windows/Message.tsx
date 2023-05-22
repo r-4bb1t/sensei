@@ -22,7 +22,6 @@ export default function Message({ id }: { id: number }) {
       <div className="overflow-y-auto p-4 pb-48 md:pb-4" ref={chatlistRef}>
         {messages
           .filter((message) => message.student === id)
-          .reverse()
           .map((message, i) => (
             <div className="chat chat-start" key={i}>
               <div className="chat-bubble bg-black text-white">

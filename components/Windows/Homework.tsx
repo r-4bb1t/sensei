@@ -2,12 +2,12 @@ import { useStudentsContext } from "@/contexts/studentsContext";
 import Student from "./Student";
 import { useEffect, useRef, useState } from "react";
 import cc from "classcat";
-import { BuffList, homework } from "@/constants/types";
+import { BuffList, homework } from "@/constants/values";
 import BuffBadge from "../BuffBadge";
 
 export default function Homework() {
   const [selected, setSelected] = useState(1);
-  const { students, setStudents, month, loading, setLoading, addMessage } =
+  const { students, setStudents, month, loading, setLoading } =
     useStudentsContext();
   const [selectedHw, setSelectedHw] = useState(students[0].lastHomework);
   const [homeworks, setHomeworks] = useState(
@@ -28,7 +28,7 @@ export default function Homework() {
       val +
       students[index].buffs.reduce((r, buff) => {
         return (
-          r + (buff.duration + buff.month > month ? buff.effect[key] ?? 0 : 0)
+          r + (buff.duration + buff.month >= month ? buff.effect[key] ?? 0 : 0)
         );
       }, 0)
     );

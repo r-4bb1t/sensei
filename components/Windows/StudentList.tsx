@@ -4,6 +4,7 @@ import BuffBadge from "../BuffBadge";
 import { AnimatePresence, motion } from "framer-motion";
 import Student from "./Student";
 import { useState } from "react";
+import cc from "classcat";
 
 export default function StudentList({ w }: { w?: WindowProps }) {
   const { students, month, setWindows, isMobile } = useStudentsContext();
@@ -23,7 +24,10 @@ export default function StudentList({ w }: { w?: WindowProps }) {
           <tbody>
             {students.map((student, i) => (
               <tr
-                className="pointer-events-auto cursor-pointer group hover:bg-black hover:text-white"
+                className={cc([
+                  "pointer-events-auto cursor-pointer group hover:bg-black hover:text-white",
+                  student.hp === 0 && "opacity-50",
+                ])}
                 onClick={() => {
                   if (w)
                     setWindows((ww) => [

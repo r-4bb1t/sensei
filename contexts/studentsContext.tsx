@@ -1,5 +1,6 @@
 import Ending from "@/components/Windows/Ending";
-import { BuffList, MESSAGE, MessageType, Student } from "@/constants/types";
+import { MESSAGE, MessageType, Student } from "@/constants/types";
+import { BuffList } from "@/constants/values";
 import { initialStudents } from "@/constants/values";
 import { WindowProps, WindowType } from "@/constants/window";
 import { getRandomPhoneMessage } from "@/utils/getRandomMessage";
@@ -183,15 +184,29 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
     } // 시험기간
 
     if (month == 5 || month == 7 || month === 11) {
+      const grade = students.map((student) => {
+        const g = getGrade(student.gpa);
+        const bn = getBuff("gpa", student.gpa, g, month - 1).pop()?.name;
+        if (bn === BuffList.goodSchoolExam.name)
+          addMessage(
+            student.index,
+            getRandomPhoneMessage(student, MESSAGE.goodSchoolExam)
+          );
+        else if (bn === BuffList.badSchoolExam.name)
+          addMessage(
+            student.index,
+            getRandomPhoneMessage(student, MESSAGE.badSchoolExam)
+          );
+        return g;
+      });
       setStudents((students) =>
-        students.map((student) => {
-          const grade = getGrade(student.gpa);
+        students.map((student, i) => {
           return {
             ...student,
-            grade: [...student.grade, grade],
+            grade: [...student.grade, grade[i]],
             buffs: [
               ...student.buffs,
-              ...getBuff("gpa", student.gpa, grade, month - 1),
+              ...getBuff("gpa", student.gpa, grade[i], month - 1),
             ],
           };
         })
@@ -199,15 +214,29 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
     } // 시험성적
 
     if (month == 4 || month == 10 || month == 12) {
+      const grade = students.map((student) => {
+        const g = getGrade(student.gpa);
+        const bn = getBuff("sat", student.sat, g, month - 1).pop()?.name;
+        if (bn === BuffList.goodMockExam.name)
+          addMessage(
+            student.index,
+            getRandomPhoneMessage(student, MESSAGE.goodMockExam)
+          );
+        else if (bn === BuffList.badMockExam.name)
+          addMessage(
+            student.index,
+            getRandomPhoneMessage(student, MESSAGE.badMockExam)
+          );
+        return g;
+      });
       setStudents((students) =>
-        students.map((student) => {
-          const grade = getGrade(student.sat);
+        students.map((student, i) => {
           return {
             ...student,
-            grade: [...student.grade, grade],
+            grade: [...student.grade, grade[i]],
             buffs: [
               ...student.buffs,
-              ...getBuff("sat", student.sat, grade, month - 1),
+              ...getBuff("sat", student.sat, grade[i], month - 1),
             ],
           };
         })

@@ -72,7 +72,7 @@ export default function Student({ id = 1 }: { id?: number }) {
       </div>
 
       <div className="mt-2 font-bold">역대 버프 목록</div>
-      <div className="px-4 mt-2 flex flex-wrap w-full gap-2">
+      <div className="px-4 mt-2 flex flex-wrap w-full gap-2 justify-center">
         {student.buffs.map((buff, i) => (
           <BuffBadge buff={buff} key={i} />
         ))}

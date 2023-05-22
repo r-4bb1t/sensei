@@ -1,4 +1,4 @@
-import { monthDescription } from "@/constants/types";
+import { monthDescription } from "@/constants/values";
 import { useStudentsContext } from "@/contexts/studentsContext";
 
 export default function Header() {

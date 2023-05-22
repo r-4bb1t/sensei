@@ -22,6 +22,9 @@ export default function BuffBadge({
           .replace("%grade", `${buff.grade}`)
           .replace("%month", `${buff.month}`)}
       >
+        <span className={cc([buff.isGood ? "text-green-600" : "text-red-600"])}>
+          {buff.isGood ? "+" : "-"}
+        </span>{" "}
         {buff.name}
       </div>
       <div className="md:hidden flex flex-wrap gap-x-2">
@@ -32,6 +35,11 @@ export default function BuffBadge({
               "!bg-opacity-50 !border-transparent",
           ])}
         >
+          <span
+            className={cc([buff.isGood ? "text-green-600" : "text-red-600"])}
+          >
+            {buff.isGood ? "+" : "-"}
+          </span>{" "}
           {buff.name}
         </div>
         <div className="pt-1 !leading-5 text-sm">

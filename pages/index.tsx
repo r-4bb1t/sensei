@@ -53,6 +53,7 @@ const Window = ({
       className={cc([
         "absolute overflow-visible border-2 border-black",
         w.type === WindowType.cctv && "w-[540px] h-[528px]",
+        w.type === WindowType.student && "w-[540px]",
         w.type === WindowType.homework && "w-[300px]",
         (w.type === WindowType.messagelist || w.type === WindowType.message) &&
           "w-[300px] h-96",
