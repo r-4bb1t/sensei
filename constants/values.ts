@@ -177,6 +177,7 @@ export const BuffList = {
     effect: { morale: 1 },
     duration: 2,
     isGood: true,
+    display: true,
   }, // 체육대회 이벤트 출전
   badMockExam: {
     name: "예상치 못한 성적 하락",
@@ -185,6 +186,7 @@ export const BuffList = {
     effect: { morale: -1 },
     duration: 2,
     isGood: false,
+    display: true,
   }, // SAT 수치가 7 이상일 경우 특정 확률로 발생
   goodMockExam: {
     name: "모의고사 성적우수상",
@@ -193,6 +195,7 @@ export const BuffList = {
     effect: { morale: 1 },
     duration: 2,
     isGood: true,
+    display: true,
   }, // SAT 수치에 비례한 확률로 발생
   badSchoolExam: {
     name: "예상치 못한 성적 하락",
@@ -201,6 +204,7 @@ export const BuffList = {
     effect: { morale: -1 },
     duration: 2,
     isGood: false,
+    display: true,
   }, // GPA 수치가 7 이상일 경우 특정 확률로 발생
   goodSchoolExam: {
     name: "내신 성적우수상",
@@ -209,6 +213,7 @@ export const BuffList = {
     effect: { morale: 1 },
     duration: 2,
     isGood: true,
+    display: true,
   }, // GPA 수치에 비례한 확률로 발생
   examPeriod: {
     name: "시험 기간",
@@ -216,13 +221,15 @@ export const BuffList = {
     effect: { hp: -1 },
     duration: 0,
     isGood: false,
+    display: false,
   },
   recovery: {
     name: "회복 중",
-    description: "아직 회복 중입니다. 의욕이 나지 않는군요.",
+    description: "HP가 0으로 떨어져 요양했습니다. 의욕이 나지 않네요.",
     effect: { morale: -1 },
     duration: 2,
     isGood: false,
+    display: true,
   },
   lowMorale: {
     name: "의욕 낮음",
@@ -230,6 +237,7 @@ export const BuffList = {
     effect: { sat: -1, gpa: -1 },
     duration: 0,
     isGood: false,
+    display: false,
   },
 };
 
@@ -259,5 +267,6 @@ export const monthDescription = [
     message: "곧 결전의 날!",
     description: "수능 30일의 전사. 수능특강 해설 증가 효과 2배!",
   },
-  { message: "졸업의 달", description: "효과 없음" },
+  { message: "졸업의 달", description: "마지막까지 힘내보자." },
+  { message: "졸업 후", description: "안녕~!" },
 ];

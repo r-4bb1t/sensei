@@ -3,15 +3,32 @@ import { useStudentsContext } from "@/contexts/studentsContext";
 import BuffBadge from "../BuffBadge";
 import { AnimatePresence, motion } from "framer-motion";
 import Student from "./Student";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cc from "classcat";
+import Ending from "./Ending";
 
 export default function StudentList({ w }: { w?: WindowProps }) {
   const { students, month, setWindows, isMobile } = useStudentsContext();
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [isEndingOpen, setIsEndingOpen] = useState(false);
+
+  useEffect(() => {
+    if (month === 13) setIsEndingOpen(true);
+  }, [month]);
+
   return (
     <>
-      <div className="pointer-events-none h-full break-all bg-white w-[600px]">
+      <div className="pointer-events-none h-full break-all bg-white md:w-[600px]">
+        {month == 13 && (
+          <div className="md:hidden w-full px-4 py-2 flex items-center justify-center">
+            <button
+              className="border-2 border-black bg-white px-4 py-2 pointer-events-auto hover:bg-black hover:text-white"
+              onClick={() => setIsEndingOpen(true)}
+            >
+              엔딩 보기
+            </button>
+          </div>
+        )}
         <table className="w-full">
           <thead className="border-b-2 border-b-black font-bold">
             <tr>
@@ -80,10 +97,31 @@ export default function StudentList({ w }: { w?: WindowProps }) {
             exit={{ scale: 0, transition: { duration: 0.2 } }}
             className="w-full h-full fixed inset-0"
           >
-            <div className="w-full h-full pt-32 pb-48 bg-white overflow-y-auto flex flex-col items-center">
+            <div className="w-full h-full pt-32 bg-white overflow-y-auto flex flex-col items-center">
               <Student id={selectedId} />
               <button
                 onClick={() => setSelectedId(null)}
+                className="fixed bottom-32 text-lg bg-white px-4 py-1 hover:bg-black hover:text-white border-black border-2"
+              >
+                닫기
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isEndingOpen && (
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0, transition: { duration: 0.2 } }}
+            className="w-full h-full fixed inset-0 pointer-events-none"
+          >
+            <div className="w-full h-full overflow-y-auto flex flex-col items-center pointer-events-auto">
+              <Ending />
+              <button
+                onClick={() => setIsEndingOpen(false)}
                 className="fixed bottom-32 text-lg bg-white px-4 py-1 hover:bg-black hover:text-white border-black border-2"
               >
                 닫기

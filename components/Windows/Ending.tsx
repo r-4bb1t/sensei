@@ -3,9 +3,9 @@ import { useStudentsContext } from "@/contexts/studentsContext";
 export default function Ending() {
   const { ending, students, reset } = useStudentsContext();
   return (
-    <div className="w-full h-full flex flex-col justify-between items-center pb-12">
+    <div className="w-full h-full flex flex-col justify-between items-center md:pb-12 pb-48 bg-white">
       <div className="w-full flex flex-col items-center px-4 py-4 border-b-2 border-b-black border-dashed">
-        <img src="/assets/logo.png" className="w-12 h-12" />
+        <img src="/assets/logo.png" className="w-12 h-12 md:w-8 md:h-8" />
         <div>202N학년도 KUCC고등학교 입시결과</div>
         <div className="w-full grid grid-cols-[32px_1fr_32px] px-4 items-center gap-2 my-1">
           <div className="rounded-full border-2 border-black w-8 h-8 flex items-center justify-center">
@@ -23,7 +23,7 @@ export default function Ending() {
       </div>
 
       <div className="w-full flex flex-col items-center px-8 py-4">
-        <div className="w-full grid grid-cols-[64px_1fr] mt-6 gap-2 font-bold">
+        <div className="w-full grid grid-cols-[64px_1fr] mt-6 gap-2 font-bold items-center">
           <div className="text-right">수시</div>
           <div className="flex flex-wrap gap-2">
             {ending.gpa.map((id) => (
@@ -34,7 +34,7 @@ export default function Ending() {
               >
                 <img
                   src={`/assets/students/front_${id}.png`}
-                  className="w-12 h-12"
+                  className="w-12 h-12 md:w-8 md:h-8"
                 />
               </div>
             ))}
@@ -49,7 +49,7 @@ export default function Ending() {
               >
                 <img
                   src={`/assets/students/front_${id}.png`}
-                  className="w-12 h-12"
+                  className="w-12 h-12 md:w-8 md:h-8"
                 />
               </div>
             ))}
@@ -64,7 +64,7 @@ export default function Ending() {
               >
                 <img
                   src={`/assets/students/front_${id}.png`}
-                  className="w-12 h-12"
+                  className="w-12 h-12 md:w-8 md:h-8"
                 />
               </div>
             ))}
@@ -85,7 +85,7 @@ export default function Ending() {
       </div>
 
       <button
-        className="mt-4 px-4 py-1 hover:bg-black hover:text-white border-black border-2"
+        className="mt-4 px-4 py-1 hover:bg-black hover:text-white border-black border-2 text-lg"
         onClick={() => reset()}
       >
         다시하기

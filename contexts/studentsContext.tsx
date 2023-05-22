@@ -215,7 +215,7 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
 
     if (month == 4 || month == 10 || month == 12) {
       const grade = students.map((student) => {
-        const g = getGrade(student.gpa);
+        const g = getGrade(student.sat);
         const bn = getBuff("sat", student.sat, g, month - 1).pop()?.name;
         if (bn === BuffList.goodMockExam.name)
           addMessage(
@@ -254,9 +254,11 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
         },
       ]);
 
+      setMobileTab(WindowType.studentlist);
+
       setEnding({
         gpa: students
-          .filter((student) => student.gpa >= 8 && student.gpa >= 6)
+          .filter((student) => student.gpa >= 8 && student.attitude >= 6)
           .map((student) => student.index),
         sat: students
           .filter(
@@ -331,18 +333,6 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
-      <AnimatePresence>
-        {month == 13 && (
-          <motion.div
-            className="fixed w-full h-full inset-0 bg-white md:hidden"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0, transition: { duration: 0.2 } }}
-          >
-            <Ending />
-          </motion.div>
-        )}
-      </AnimatePresence>
     </StudentsContext.Provider>
   );
 };

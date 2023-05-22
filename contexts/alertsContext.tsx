@@ -41,7 +41,7 @@ const AlertContextProvider = ({ children }: { children: ReactNode }) => {
     >
       <aside
         className={
-          "fixed md:bottom-8 top-2 md:top-auto bottom-auto z-50 w-full px-2 flex md:flex-col flex-col-reverse items-end gap-2"
+          "pointer-events-none fixed md:bottom-8 top-2 md:top-auto bottom-auto z-50 w-full px-2 flex md:flex-col flex-col-reverse items-end gap-2"
         }
       >
         <AnimatePresence>

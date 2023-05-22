@@ -30,6 +30,7 @@ export interface Buff {
     morale?: number;
   };
   duration: number;
+  display: boolean;
 }
 
 export interface HomeworkType {

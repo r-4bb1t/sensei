@@ -6,7 +6,7 @@ import BuffBadge from "../BuffBadge";
 
 export default function Student({ id = 1 }: { id?: number }) {
   const [rId, setRId] = useState(id);
-  const { students, month } = useStudentsContext();
+  const { students, ending, month } = useStudentsContext();
   const [student, setStudent] = useState(students[id - 1]);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function Student({ id = 1 }: { id?: number }) {
   }, [rId, students]);
 
   return (
-    <div className="w-full flex flex-col items-center pb-4">
+    <div className="w-full flex flex-col items-center md:pb-8 pb-48 overflow-y-auto">
       <div className="grid grid-cols-[32px_200px_32px] font-bold">
         <button onClick={() => setRId((rId) => ((rId + 7) % 9) + 1)}>
           {"<"}
@@ -24,7 +24,7 @@ export default function Student({ id = 1 }: { id?: number }) {
         </div>
         <button onClick={() => setRId((rId) => (rId % 9) + 1)}>{">"}</button>
       </div>
-      <div className="w-full relative flex justify-center h-24 mb-2">
+      <div className="w-full relative flex justify-center h-24 mb-2 shrink-0">
         <img src="/assets/items/desk1.png" className="w-24 absolute" />
         <img
           src={`/assets/students/${rId}.png`}
@@ -73,46 +73,59 @@ export default function Student({ id = 1 }: { id?: number }) {
 
       <div className="mt-2 font-bold">역대 버프 목록</div>
       <div className="px-4 mt-2 flex flex-wrap w-full gap-2 justify-center">
-        {student.buffs.map((buff, i) => (
-          <BuffBadge buff={buff} key={i} />
-        ))}
+        {student.buffs
+          .filter((buff) => buff.display)
+          .map((buff, i) => (
+            <BuffBadge buff={buff} key={i} />
+          ))}
       </div>
 
-      <div className="mt-2 font-bold">성적표</div>
+      <div className="mt-4 font-bold">성적표</div>
       <table className="table grade-table collapse table-fixed text-center mx-2 mt-2">
-        <tr>
-          <th>3월 모의고사</th>
-          <th>1학기 중간</th>
-          <th>1학기 기말</th>
-        </tr>
-        <tr>
-          <td className="h-6">
-            <Grade grade={student.grade[0]} />
-          </td>
-          <td>
-            <Grade grade={student.grade[1]} />
-          </td>
-          <td>
-            <Grade grade={student.grade[2]} />
-          </td>
-        </tr>
-        <tr>
-          <th>9월 모의고사</th>
-          <th>2학기 중간</th>
-          <th>수능</th>
-        </tr>
-        <tr>
-          <td className="h-6">
-            <Grade grade={student.grade[3]} />
-          </td>
-          <td>
-            <Grade grade={student.grade[4]} />
-          </td>
-          <td>
-            <Grade grade={student.grade[5]} />
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>3월 모의고사</th>
+            <th>1학기 중간</th>
+            <th>1학기 기말</th>
+          </tr>
+          <tr>
+            <td className="h-6">
+              <Grade grade={student.grade[0]} />
+            </td>
+            <td>
+              <Grade grade={student.grade[1]} />
+            </td>
+            <td>
+              <Grade grade={student.grade[2]} />
+            </td>
+          </tr>
+          <tr>
+            <th>9월 모의고사</th>
+            <th>2학기 중간</th>
+            <th>수능</th>
+          </tr>
+          <tr>
+            <td className="h-6">
+              <Grade grade={student.grade[3]} />
+            </td>
+            <td>
+              <Grade grade={student.grade[4]} />
+            </td>
+            <td>
+              <Grade grade={student.grade[5]} />
+            </td>
+          </tr>
+        </tbody>
       </table>
+
+      {month == 13 && (
+        <>
+          <div className="mt-4 font-bold">엔딩</div>
+          {ending.gpa.includes(id) && <div>수시 합격</div>}
+          {ending.sat.includes(id) && <div>정시 합격</div>}
+          {ending.specialist.includes(id) && <div>특기자 합격</div>}
+        </>
+      )}
     </div>
   );
 }
