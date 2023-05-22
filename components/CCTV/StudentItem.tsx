@@ -27,7 +27,7 @@ export default function StudentItem({ id }: { id: number }) {
 
   return student.hp > 0 && month !== 8 && month !== 13 ? (
     <motion.div
-      className="relative flex justify-center"
+      className="relative flex justify-center origin-bottom"
       initial={{ scaleY: 0 }}
       animate={{ scaleY: 1 }}
       exit={{ scaleY: 0, transition: { duration: 0.2 } }}
