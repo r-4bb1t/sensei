@@ -18,7 +18,7 @@ export default function StudentList({ w }: { w?: WindowProps }) {
 
   return (
     <>
-      <div className="pointer-events-none h-full break-all bg-white md:w-[600px]">
+      <div className="pointer-events-auto overflow-y-auto h-full break-all bg-white md:w-[600px] pb-32 md:pb-2">
         {month == 13 && (
           <div className="md:hidden w-full px-4 py-2 flex items-center justify-center">
             <button
@@ -29,8 +29,8 @@ export default function StudentList({ w }: { w?: WindowProps }) {
             </button>
           </div>
         )}
-        <table className="w-full">
-          <thead className="border-b-2 border-b-black font-bold">
+        <table className="w-full relative">
+          <thead className="border-b-2 border-b-black font-bold sticky top-0 bg-white">
             <tr>
               <td className="md:w-12 w-8 text-center">번호</td>
               <td className="md:w-16 w-8 text-center">사진</td>

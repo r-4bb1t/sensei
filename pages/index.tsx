@@ -299,7 +299,7 @@ const Home: NextPage = () => {
           className={cc([(!initialOffset || !currentOffset) && "hidden"])}
           style={{
             transform: `translate(${layer[0]}px, ${layer[1]}px)`,
-            zIndex: "5000",
+            zIndex: "10000",
           }}
         >
           {item && (
@@ -312,7 +312,7 @@ const Home: NextPage = () => {
           )}
         </div>
       </div>
-      <div className="w-full h-screen md:hidden pt-32">
+      <div className="w-full h-screen [height:calc(var(--vh, 1vh)*100)] overflow-y-auto md:hidden pt-32 pb-24">
         {
           {
             [WindowType.student]: <Student />,
