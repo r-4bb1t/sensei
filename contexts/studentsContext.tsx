@@ -128,6 +128,12 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
     window.addEventListener("resize", () => {
       setIsMobile(window.matchMedia("(max-width: 768px)").matches);
     });
+    if (localStorage.getItem("data")) {
+      const data = JSON.parse(localStorage.getItem("data")!);
+      setStudents(data.students);
+      setMonth(data.month);
+      setMessages(data.messages);
+    }
   }, []);
 
   const getEnding = (students: Student[]) => {
@@ -341,15 +347,6 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
         },
       ]);
   }, [month]);
-
-  useEffect(() => {
-    if (localStorage.getItem("data")) {
-      const data = JSON.parse(localStorage.getItem("data")!);
-      setStudents(data.students);
-      setMonth(data.month);
-      setMessages(data.messages);
-    }
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("data", JSON.stringify({ students, month, messages }));
