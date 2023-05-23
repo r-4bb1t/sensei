@@ -107,19 +107,48 @@ const getBuff = (
 };
 
 const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
+  const version = 1.0;
   const [windows, setWindows] = useState<WindowProps[]>([]);
   const [mobileTab, setMobileTab] = useState<WindowType>(WindowType.cctv);
   const [isMobile, setIsMobile] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const [month, setMonth] = useState(3);
   const [ending, setEnding] = useState<{
     gpa: number[];
     sat: number[];
     specialist: number[];
   }>({ gpa: [], sat: [], specialist: [] });
-  const [students, setStudents] = useState<Student[]>(initialStudents);
-  const [messages, setMessages] = useState<MessageType[]>([]);
+
+  const [students, setStudents] = useState<Student[]>(() => {
+    try {
+      const data = JSON.parse(localStorage.getItem("data") || "{}");
+      if (data?.version || data.version !== version) return initialStudents;
+      if (data?.students) {
+        return data.students as Student[];
+      }
+    } catch (e) {}
+    return initialStudents;
+  });
+  const [messages, setMessages] = useState<MessageType[]>(() => {
+    try {
+      const data = JSON.parse(localStorage.getItem("data") || "{}");
+      if (data?.version || data.version !== version) return [];
+      if (data?.messgaes) {
+        return data.messgaes as MessageType[];
+      }
+    } catch (e) {}
+    return [];
+  });
+
+  const [month, setMonth] = useState(() => {
+    try {
+      const data = JSON.parse(localStorage.getItem("data") || "{}");
+      if (data?.version || data.version !== version) return 3;
+      if (data?.month) {
+        return data.month as number;
+      }
+    } catch (e) {}
+    return 3;
+  });
 
   const { push } = useAlert();
 
@@ -128,12 +157,6 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
     window.addEventListener("resize", () => {
       setIsMobile(window.matchMedia("(max-width: 768px)").matches);
     });
-    if (localStorage.getItem("data")) {
-      const data = JSON.parse(localStorage.getItem("data")!);
-      setStudents(data.students);
-      setMonth(data.month);
-      setMessages(data.messages);
-    }
   }, []);
 
   const getEnding = (students: Student[]) => {
@@ -349,7 +372,10 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
   }, [month]);
 
   useEffect(() => {
-    localStorage.setItem("data", JSON.stringify({ students, month, messages }));
+    localStorage.setItem(
+      "data",
+      JSON.stringify({ version, students, month, messages })
+    );
   }, [students, month, messages]);
 
   const reset = () => {
