@@ -10,7 +10,7 @@ export default function MessageList({ w }: { w?: WindowProps }) {
 
   return (
     <>
-      <div className="flex flex-col h-full overflow-y-auto">
+      <div className="flex flex-col h-full overflow-y-auto pb-32 md:pb-2">
         {messages.length > 0 ? (
           messages
             .filter(
