@@ -369,7 +369,7 @@ const StudentsContextProvider = ({ children }: { children: ReactNode }) => {
           setLoading(false);
           setMonth((month) => month + 1);
         },
-        process.env.NODE_ENV === "development" ? 1000 : 5000
+        process.env.NODE_ENV === "development" ? 1000 : 10000
       );
 
       students.forEach((student) => {
