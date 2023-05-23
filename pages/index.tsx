@@ -299,7 +299,7 @@ const Home: NextPage = () => {
           className={cc([(!initialOffset || !currentOffset) && "hidden"])}
           style={{
             transform: `translate(${layer[0]}px, ${layer[1]}px)`,
-            zIndex: "10000",
+            zIndex: "5000",
           }}
         >
           {item && (
