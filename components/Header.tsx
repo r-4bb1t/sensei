@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <header className="md:z-auto md:bg-transparent bg-white z-40 md:border-none border-b-2 border-b-black w-full flex flex-col md:items-end md:p-6 font-bold fixed pointer-events-none inset-x-0 top-0">
       <div className="flex md:flex-col md:items-end items-center">
-        <div className="relative w-fit shrink-0">
+        <div className="relative w-fit shrink-0 ml-2">
           <img src="/assets/icons/calendar.png" />
           <div className="absolute flex justify-center inset-0 text-xl pt-6">
             <div className="h-8 overflow-hidden">
