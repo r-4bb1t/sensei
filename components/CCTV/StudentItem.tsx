@@ -25,7 +25,7 @@ export default function StudentItem({ id }: { id: number }) {
     );
   }, [month]);
 
-  return month !== 8 && month !== 13 ? (
+  return month === 8 || month === 13 ? (
     <img src="/assets/blank.png" className="w-full" />
   ) : student.hp > 0 ? (
     <motion.div
