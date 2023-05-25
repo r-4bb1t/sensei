@@ -116,7 +116,7 @@ export default function StudentList({ w }: { w?: WindowProps }) {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0, transition: { duration: 0.2 } }}
-            className="w-full h-full fixed inset-0 pointer-events-none"
+            className="w-full h-full fixed inset-0 pointer-events-none md:hidden"
           >
             <div className="w-full h-full overflow-y-auto flex flex-col items-center pointer-events-auto">
               <Ending />

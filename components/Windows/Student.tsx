@@ -122,17 +122,17 @@ export default function Student({ id = 1 }: { id?: number }) {
         <>
           <div className="mt-4 font-bold mb-2">엔딩</div>
           <div className="flex items-center gap-2">
-            {ending.gpa.includes(id) && (
+            {ending.gpa.includes(rId) && (
               <div className="px-2 py-1 rounded bg-black text-white">
                 수시 합격
               </div>
             )}
-            {ending.sat.includes(id) && (
+            {ending.sat.includes(rId) && (
               <div className="px-2 py-1 rounded bg-black text-white">
                 정시 합격
               </div>
             )}
-            {ending.specialist.includes(id) && (
+            {ending.specialist.includes(rId) && (
               <div className="px-2 py-1 rounded bg-black text-white">
                 특기자 합격
               </div>
