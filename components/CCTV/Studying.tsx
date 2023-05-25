@@ -1,5 +1,9 @@
-import StudentItem from "./StudentItem";
 import { AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
+
+const StudentItem = dynamic(() => import("./StudentItem"), {
+  ssr: false,
+});
 
 export default function Studying({ size }: { size: number }) {
   return (

@@ -10,17 +10,18 @@ export default function Header() {
           <img src="/assets/icons/calendar.png" />
           <div className="absolute flex justify-center inset-0 text-xl pt-6">
             <div className="h-8 overflow-hidden">
-              {[...Array(11)].map((_, i) => (
-                <div
-                  key={i}
-                  className="h-8 flex items-center justify-center transition-transform"
-                  style={{
-                    transform: `translateY(${-32 * (month - 3)}px)`,
-                  }}
-                >
-                  {((i + 2) % 12) + 1}월
-                </div>
-              ))}
+              {month &&
+                [...Array(11)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-8 flex items-center justify-center transition-transform"
+                    style={{
+                      transform: `translateY(${-32 * (month - 3)}px)`,
+                    }}
+                  >
+                    {((i + 2) % 12) + 1}월
+                  </div>
+                ))}
             </div>
           </div>
         </div>

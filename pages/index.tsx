@@ -14,12 +14,16 @@ import StudentsList from "@/components/Windows/StudentList";
 import CCTV from "@/components/CCTV";
 import Student from "@/components/Windows/Student";
 import { useStudentsContext } from "@/contexts/studentsContext";
-import Header from "@/components/Header";
 import Homework from "@/components/Windows/Homework";
 import Ending from "@/components/Windows/Ending";
 import Footer from "@/components/Footer";
 import MessageList from "@/components/Windows/MessageList";
 import Message from "@/components/Windows/Message";
+import dynamic from "next/dynamic";
+
+const Header = dynamic(() => import("@/components/Header"), {
+  ssr: false,
+});
 
 const Window = ({
   w,
